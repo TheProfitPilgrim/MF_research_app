@@ -53,3 +53,27 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
         index_return = ((index_end_value - index_start_value) / index_start_value) * 100
 
     return df_top_backtest, portfolio_return, index_return
+
+#Function for backtest animation
+
+def get_nav_history(selected_funds, index_name, start_date, end_date):
+    # Ensure start_date and end_date are converted to pandas datetime format
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
+    # Load NAV data
+    df_nav = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
+    df_index = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
+
+    # Convert dates in the DataFrame to pandas datetime format
+    df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"])
+    df_index["Date"] = pd.to_datetime(df_index["Date"])
+
+    # Filter NAV data for selected funds in the date range
+    df_portfolio = df_nav[df_nav["scheme_name"].isin(selected_funds)]
+    df_portfolio = df_portfolio[(df_portfolio["nav_date"] >= start_date) & (df_portfolio["nav_date"] <= end_date)]
+
+    # Filter index data in the date range
+    df_index = df_index[(df_index["Date"] >= start_date) & (df_index["Date"] <= end_date)][["Date", "Close"]]
+
+    return df_portfolio, df_index
