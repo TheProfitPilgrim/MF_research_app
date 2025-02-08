@@ -31,7 +31,7 @@ if selection_mode == "Back Test":
         del st.session_state["df_top_current"]
     start_date = st.date_input("Backtest Start Date")
     end_date = st.date_input("Backtest End Date")
-    rebalance_yn = st.radio("Do you want to rebalancing?", ("Yes", "No"))
+    rebalance_yn = st.radio("Do you want rebalancing?", ("Yes", "No"))
 
 # Check if df_top_current is in session state
 if "df_top_current" not in st.session_state:
