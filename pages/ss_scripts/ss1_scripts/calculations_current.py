@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import os
 
-df = pd.read_csv(os.path.join("data", "input", "mf_eom.csv"))
-df_in = pd.read_csv(os.path.join("data", "input", "nifty_eom.csv"))
+df = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
+df_in = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
 
 df_in["Date"] = pd.to_datetime(df_in["Date"])
 df["nav_date"] = pd.to_datetime(df["nav_date"])

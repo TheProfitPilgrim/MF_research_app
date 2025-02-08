@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-df = pd.read_csv(os.path.join("data", "output", "MF_calc_current.csv"))
+df = pd.read_csv(os.path.join("Data", "Output", "MF_calc_current.csv"))
 
 def get_top_funds(min_days, top_n_alpha):
     # Filter based on minimum days

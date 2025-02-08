@@ -3,7 +3,7 @@ import os
 
 def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     # Load backtest mutual fund data
-    df = pd.read_csv(os.path.join("data", "output", "MF_calc_backtest.csv"))
+    df = pd.read_csv(os.path.join("Data", "Output", "MF_calc_backtest.csv"))
     
     # Convert start_date and end_date to datetime
     start_date = pd.to_datetime(start_date)
@@ -17,7 +17,7 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     df_top_backtest = df_sorted.head(top_n_alpha)
 
     # Load mutual fund NAV data
-    df_nav = pd.read_csv(os.path.join("data", "input", "mf_eom.csv"))
+    df_nav = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
     df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"])
 
     fund_returns = []
@@ -40,7 +40,7 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     portfolio_return = sum(fund_returns) / len(fund_returns) if fund_returns else 0
 
     # Load index data and compute index return
-    df_index = pd.read_csv(os.path.join("data", "Input", "nifty_eom.csv"))
+    df_index = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
     df_index["Date"] = pd.to_datetime(df_index["Date"])
 
     index_start = df_index[df_index["Date"] >= start_date].sort_values(by="Date").head(1)

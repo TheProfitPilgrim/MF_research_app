@@ -8,8 +8,8 @@ if len(sys.argv) > 1:
 else:
     raise ValueError("start_date argument is missing.")
 
-df_prelim = pd.read_csv(os.path.join("data", "input", "mf_eom.csv"))
-df_in_prelim = pd.read_csv(os.path.join("data", "input", "nifty_eom.csv"))
+df_prelim = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
+df_in_prelim = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
 
 df_prelim["nav_date"] = pd.to_datetime(df_prelim["nav_date"], dayfirst=True, errors="coerce")
 df_in_prelim["Date"] = pd.to_datetime(df_in_prelim["Date"], errors="coerce")
