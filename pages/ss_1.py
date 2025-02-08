@@ -56,11 +56,21 @@ if st.button("Select"):
 
         # Run calculations_backtest.py with start_date
         subprocess.run(["python", os.path.join("ss_scripts", "ss1_scripts", "calculations_backtest.py"), str(start_date)])
+        
+        portfolio_backtest_return = 0
 
-        df_top_backtest = filtering_backtest.get_top_funds(min_days, top_n_alpha)
-
+        df_top_backtest, portfolio_backtest_return, index_backtest_return = filtering_backtest.get_top_funds(min_days, top_n_alpha, start_date, end_date)
+        
+        portfolio_backtest_return = round(portfolio_backtest_return,2)
+        index_backtest_return = round(index_backtest_return,2)
+        
+        pf_to_index_bt_returns = portfolio_backtest_return / index_backtest_return
+        pf_to_index_bt_returns = round(pf_to_index_bt_returns,2)
+        
         # Store in session state
         st.session_state.df_top_backtest = df_top_backtest
+        st.session_state.portfolio_backtest_return = portfolio_backtest_return
+        st.session_state.index_backtest_return = index_backtest_return
 
     elif selection_mode == "Back Test" and rebalance_yn == "Yes":
         print("Hello world")
@@ -111,3 +121,7 @@ if st.session_state.df_top_backtest is not None:
     st.write("### Top Selected Funds")
     st.dataframe(st.session_state.df_top_backtest)
     
+   
+    st.write(f'### Equi weighted portfolio return of the above table of funds if held till the end date = {portfolio_backtest_return} %')
+    st.write(f'### Index returns in the same period {index_backtest_return} %')
+    st.write(f'### Outperformed the index by {pf_to_index_bt_returns} times')
