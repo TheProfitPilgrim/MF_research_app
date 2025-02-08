@@ -3,9 +3,11 @@ import pandas as pd
 import subprocess
 import plotly.graph_objects as go
 import os
-from ss_scripts.ss1_scripts import *
 
-#Setting width
+from pages.ss_scripts.ss1_scripts import filtering_current
+from pages.ss_scripts.ss1_scripts import filtering_backtest
+
+# Setting width
 st.set_page_config(layout="wide")
 
 # App Title
@@ -26,25 +28,24 @@ selection_mode = st.radio("Select Mode:", ("Current", "Back Test"))
 if selection_mode == "Back Test":
     start_date = st.date_input("Backtest Start Date")
     end_date = st.date_input("Backtest End Date")
-    rebalance_yn = st.radio("Do you want to rebalancing?",("Yes", "No"))
+    rebalance_yn = st.radio("Do you want to rebalancing?", ("Yes", "No"))
 
 # Check if df_top_current is in session state
 if "df_top_current" not in st.session_state:
     st.session_state.df_top_current = None  # Initialize as None
 
-# similarly for df_top_backtest
+# Similarly for df_top_backtest
 if "df_top_backtest" not in st.session_state:
-    st.session_state.df_top_backtest = None 
+    st.session_state.df_top_backtest = None
 
 if st.button("Select"):
     if selection_mode == "Current":
         st.write("Running calculations...")
 
-        # Path for calculations_current.py + running calculations_current
-        calculations_current_path = os.path.join("ss_scripts", "ss1_scripts", "calculations_current.py")
-        subprocess.run(["python", calculations_current_path])
-        
-        #filtering using the get_top_funds function in filtering_current.py 
+        # Run calculations_current.py
+        subprocess.run(["python", os.path.join("ss_scripts", "ss1_scripts", "calculations_current.py")])
+
+        # Filtering using get_top_funds function in filtering_current.py
         df_top_current = filtering_current.get_top_funds(min_days, top_n_alpha)
 
         # Store in session state
@@ -52,16 +53,15 @@ if st.button("Select"):
 
     elif selection_mode == "Back Test" and rebalance_yn == "No":
         st.write("Running backtest calculations...")
-        
-        # we need to pass the start_date for running the calculations_backtest.py
-        start_date_string = str(start_date)
-        subprocess.run(["python", "calculations_backtest.py", start_date_string])
-        
-        df_top_backtest = filtering_backtest.get_top_funds(start_date, top_n_alpha)
+
+        # Run calculations_backtest.py with start_date
+        subprocess.run(["python", os.path.join("ss_scripts", "ss1_scripts", "calculations_backtest.py"), str(start_date)])
+
+        df_top_backtest = filtering_backtest.get_top_funds(min_days, top_n_alpha)
 
         # Store in session state
         st.session_state.df_top_backtest = df_top_backtest
-        
+
     elif selection_mode == "Back Test" and rebalance_yn == "Yes":
         print("Hello world")
 
@@ -106,7 +106,8 @@ if st.session_state.df_top_current is not None:
         )
 
         st.plotly_chart(fig)
-        
+
 if st.session_state.df_top_backtest is not None:
-        st.write("### Top Selected Funds")
-        st.dataframe(st.session_state.df_top_backtest)
+    st.write("### Top Selected Funds")
+    st.dataframe(st.session_state.df_top_backtest)
+    
