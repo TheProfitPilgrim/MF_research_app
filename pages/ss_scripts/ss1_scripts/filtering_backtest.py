@@ -1,13 +1,21 @@
 import pandas as pd
 import os
+from pages.ss_scripts.ss1_scripts.calculations import mf_returns_calculations
 
 def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     # Load backtest mutual fund data
-    df = pd.read_csv(os.path.join("Data", "Output", "MF_calc_backtest.csv"))
+    
+    df_mf_raw  = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
+    df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
+    
+    df_mf = df_mf_raw[pd.to_datetime(df_mf_raw['nav_date'], dayfirst=True) <= pd.Timestamp(start_date)].copy()
+    df_index = df_index_raw[pd.to_datetime(df_index_raw['Date'], dayfirst=True) <= pd.Timestamp(start_date)].copy()
+    
+    df = mf_returns_calculations(df_mf, df_index)
     
     # Convert start_date and end_date to datetime
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(end_date)
+    start_date = pd.to_datetime(start_date, dayfirst=True)
+    end_date = pd.to_datetime(end_date, dayfirst=True)
 
     # Filter funds based on minimum days
     df_filtered = df[df["Duration (Days)"] >= min_days]
@@ -16,9 +24,11 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     df_sorted = df_filtered.sort_values(by="Excess Return (%)", ascending=False)
     df_top_backtest = df_sorted.head(top_n_alpha)
 
+    '''The following is for the cumulative return calculation of an equi weighted portfolio of the backtest funds held from the start to end date'''
+
     # Load mutual fund NAV data
     df_nav = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
-    df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"])
+    df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"],dayfirst=True)
 
     fund_returns = []
     
@@ -39,9 +49,10 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     # Calculate portfolio return as arithmetic mean
     portfolio_return = sum(fund_returns) / len(fund_returns) if fund_returns else 0
 
+    '''The following is for the cumulative returns of the index in the same period that the equi weighted back test portfolio is held'''
     # Load index data and compute index return
     df_index = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
-    df_index["Date"] = pd.to_datetime(df_index["Date"])
+    df_index["Date"] = pd.to_datetime(df_index["Date"],dayfirst=True)
 
     index_start = df_index[df_index["Date"] >= start_date].sort_values(by="Date").head(1)
     index_end = df_index[df_index["Date"] <= end_date].sort_values(by="Date", ascending=False).head(1)
@@ -55,19 +66,18 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date):
     return df_top_backtest, portfolio_return, index_return
 
 #Function for backtest animation
-
 def get_nav_history(selected_funds, index_name, start_date, end_date):
     # Ensure start_date and end_date are converted to pandas datetime format
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(end_date)
+    start_date = pd.to_datetime(start_date,dayfirst=True)
+    end_date = pd.to_datetime(end_date,dayfirst=True)
 
     # Load NAV data
     df_nav = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
     df_index = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
 
     # Convert dates in the DataFrame to pandas datetime format
-    df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"])
-    df_index["Date"] = pd.to_datetime(df_index["Date"])
+    df_nav["nav_date"] = pd.to_datetime(df_nav["nav_date"],dayfirst=True)
+    df_index["Date"] = pd.to_datetime(df_index["Date"],dayfirst=True)
 
     # Filter NAV data for selected funds in the date range
     df_portfolio = df_nav[df_nav["scheme_name"].isin(selected_funds)]

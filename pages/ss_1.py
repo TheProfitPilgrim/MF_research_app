@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
+from pages.ss_scripts.ss1_scripts import rebalancing_backtest
 from pages.ss_scripts.ss1_scripts import filtering_current
 from pages.ss_scripts.ss1_scripts import filtering_backtest
 
@@ -32,6 +33,9 @@ if selection_mode == "Back Test":
     start_date = st.date_input("Backtest Start Date")
     end_date = st.date_input("Backtest End Date")
     rebalance_yn = st.radio("Do you want rebalancing?", ("Yes", "No"))
+    if rebalance_yn == "Yes":
+        # Select rebalancing frequency
+        rebalance_freq = st.selectbox("Rebalancing Frequency", ["Monthly", "Quarterly", "Semi-Annual", "Annual"])
 
 # Check if df_top_current is in session state
 if "df_top_current" not in st.session_state:
@@ -44,10 +48,6 @@ if "df_top_backtest" not in st.session_state:
 if st.button("Select"):
     if selection_mode == "Current":
         st.write("Running calculations...")
-
-        # Run calculations_current.py
-        subprocess.run(["python", os.path.join("ss_scripts", "ss1_scripts", "calculations_current.py")])
-
         # Filtering using get_top_funds function in filtering_current.py
         df_top_current = filtering_current.get_top_funds(min_days, top_n_alpha)
 
@@ -57,18 +57,16 @@ if st.button("Select"):
     elif selection_mode == "Back Test" and rebalance_yn == "No":
         st.write("Running backtest calculations...")
 
-        # Run calculations_backtest.py with start_date
-        subprocess.run(["python", os.path.join("ss_scripts", "ss1_scripts", "calculations_backtest.py"), str(start_date)])
-        
-        portfolio_backtest_return = 0
-
         df_top_backtest, portfolio_backtest_return, index_backtest_return = filtering_backtest.get_top_funds(min_days, top_n_alpha, start_date, end_date)
         
         portfolio_backtest_return = round(portfolio_backtest_return,2)
         index_backtest_return = round(index_backtest_return,2)
         
-        pf_to_index_bt_returns = portfolio_backtest_return / index_backtest_return
-        pf_to_index_bt_returns = round(pf_to_index_bt_returns,2)
+        if index_backtest_return!=0:
+            pf_to_index_bt_returns = portfolio_backtest_return / index_backtest_return
+            pf_to_index_bt_returns = round(pf_to_index_bt_returns,2)
+        else:
+            st.write("## Please check the start and end dates again")
         
         # Store in session state
         st.session_state.df_top_backtest = df_top_backtest
@@ -76,7 +74,29 @@ if st.button("Select"):
         st.session_state.index_backtest_return = index_backtest_return
 
     elif selection_mode == "Back Test" and rebalance_yn == "Yes":
-        print("Hello world")
+
+        # Validate rebalancing parameters
+        is_valid, error_msg = rebalancing_backtest.validate_rebalancing(start_date, end_date, rebalance_freq)
+
+        if not is_valid:
+            st.error(error_msg)
+        else:
+            st.write("Running backtest with rebalancing calculations...")
+
+            # Call backtest function
+            df_top_rebalance_bt, portfolio_return, index_return, unique_funds_count, num_rebalances = rebalancing_backtest.backtest_with_rebalancing(
+                start_date, end_date, min_days, top_n_alpha, rebalance_freq
+            )
+
+            # Display results
+            st.subheader("Backtest Results with Rebalancing")
+            st.write(f"Portfolio Return: {portfolio_return:.2f}%")
+            st.write(f"Index Return: {index_return:.2f}%")
+            st.write(f"Number of Unique Funds Selected: {unique_funds_count}")
+            st.write(f"Number of Rebalances: {num_rebalances}")
+
+            # Show final selected funds dataframe
+            #st.dataframe(df_top_rebalance_bt)
 
 # If df_top_current exists, display it
 if st.session_state.df_top_current is not None:
