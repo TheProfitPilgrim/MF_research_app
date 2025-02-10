@@ -101,7 +101,7 @@ if st.button("Select"):
 
 # If df_top_current exists, display it
 if st.session_state.df_top_current is not None:
-    st.write("### Portfolio - No rebalancing")
+    st.write("### Current Top Funds")
     st.dataframe(st.session_state.df_top_current)
 
     # Visualization button
@@ -124,7 +124,7 @@ if st.session_state.df_top_current is not None:
         
 
 if st.session_state.df_top_backtest is not None:
-    st.write("### Top Selected Funds")
+    st.write(f"### Portfolio formed on {start_date} ")
     st.dataframe(st.session_state.df_top_backtest)
     
     if "portfolio_backtest_return" in st.session_state:
