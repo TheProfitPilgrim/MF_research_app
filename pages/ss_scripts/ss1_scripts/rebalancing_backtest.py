@@ -20,16 +20,6 @@ def validate_rebalancing(start_date, end_date, rebalance_freq):
         return False, f"Time period is too short for {rebalance_freq} rebalancing. Choose a longer duration or lower frequency."
     return True, None
 
-import pandas as pd
-import os
-
-import pandas as pd
-import os
-
-import pandas as pd
-import os
-from dateutil.relativedelta import relativedelta
-
 def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq):
     """
     Performs a backtest with periodic rebalancing and re-evaluation.
@@ -43,11 +33,11 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
 
     Returns:
         tuple: (DataFrame, float, float, int, int) - A tuple containing:
-            - DataFrame: A DataFrame of the top selected funds over time.
-            - float: Portfolio return.
-            - float: Index return.
-            - int: Number of unique funds selected.
-            - int: Number of rebalances performed.
+        - DataFrame: A DataFrame of the top selected funds over time.
+        - float: Portfolio return.
+        - float: Index return.
+        - int: Number of unique funds selected.
+        - int: Number of rebalances performed.
     """
 
     # Load Mutual Fund & Index Data
@@ -57,10 +47,9 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
     # Convert Dates to Datetime
     df_mf_raw["nav_date"] = pd.to_datetime(df_mf_raw["nav_date"], dayfirst=True)
     df_index_raw["Date"] = pd.to_datetime(df_index_raw["Date"], dayfirst=True)
-    
     start_date = pd.to_datetime(start_date)
     end_date = pd.to_datetime(end_date)
-    
+
     # Initialize Backtest Variables
     current_date = start_date
     portfolio_value = 1000  # Initial Portfolio Value
@@ -86,11 +75,12 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
             current_date += rebalance_map[rebalance_freq]
             continue
 
-        # Filter Mutual Fund Data up to Current Date
+        # Filter Mutual Fund Data and Index Data up to Current Date
         df_mf = df_mf_raw[df_mf_raw["nav_date"] <= current_date].copy()
+        df_index = df_index_raw[df_index_raw["Date"] <= current_date].copy()
 
-        # Run Calculations (This function should return the processed DataFrame)
-        df = mf_returns_calculations(df_mf, df_index_raw)
+        # Run Calculations 
+        df = mf_returns_calculations(df_mf, df_index)  
 
         # Ensure the necessary column exists before filtering
         if "Duration (Days)" not in df.columns:
@@ -111,8 +101,9 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
 
         # Compute Portfolio Value at Next Rebalance Date
         next_rebalance_date = current_date + rebalance_map[rebalance_freq]
-        df_mf_next = df_mf_raw[(df_mf_raw["nav_date"] > current_date) & (df_mf_raw["nav_date"] <= next_rebalance_date)]
-        
+
+        # Filter Mutual Fund Data for calculating returns till the NEXT rebalance date
+        df_mf_next = df_mf_raw[(df_mf_raw["nav_date"] > current_date) & (df_mf_raw["nav_date"] <= next_rebalance_date)].copy() #added copy()
         portfolio_value_new = 0
         for fund in selected_funds:
             df_fund = df_mf_next[df_mf_next["scheme_name"] == fund]
@@ -140,12 +131,12 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
     if not index_start.empty and not index_end.empty:
         index_start_value = index_start["Close"].values[0]
         index_end_value = index_end["Close"].values[0]
+        #index_return = ((index_end_value - index_start_value) / index_start_value) * 100
         index_return = ((index_end_value - index_start_value) / index_start_value) * 100
 
 
     # Calculate Final Returns
     portfolio_return = ((portfolio_value / 1000) - 1) * 100  # % return
-    index_return = ((index_end_value / index_start_value) - 1) * 100
 
     # Output Number of Unique Funds & Rebalances
     num_rebalances = len(rebalancing_dates) - 1

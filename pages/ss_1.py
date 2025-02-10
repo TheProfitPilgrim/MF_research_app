@@ -74,7 +74,10 @@ if st.button("Select"):
         st.session_state.index_backtest_return = index_backtest_return
 
     elif selection_mode == "Back Test" and rebalance_yn == "Yes":
-
+        keys_to_clear = ["df_top_backtest", "portfolio_backtest_return", "index_backtest_return"]
+        for key in keys_to_clear:
+            if key in st.session_state:
+                st.session_state.key = ""
         # Validate rebalancing parameters
         is_valid, error_msg = rebalancing_backtest.validate_rebalancing(start_date, end_date, rebalance_freq)
 
@@ -84,23 +87,21 @@ if st.button("Select"):
             st.write("Running backtest with rebalancing calculations...")
 
             # Call backtest function
-            df_top_rebalance_bt, portfolio_return, index_return, unique_funds_count, num_rebalances = rebalancing_backtest.backtest_with_rebalancing(
-                start_date, end_date, min_days, top_n_alpha, rebalance_freq
-            )
+            df_top_rebalance_bt, portfolio_return, index_return, unique_funds_count, num_rebalances = rebalancing_backtest.backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq)
 
             # Display results
             st.subheader("Backtest Results with Rebalancing")
-            st.write(f"Portfolio Return: {portfolio_return:.2f}%")
-            st.write(f"Index Return: {index_return:.2f}%")
-            st.write(f"Number of Unique Funds Selected: {unique_funds_count}")
-            st.write(f"Number of Rebalances: {num_rebalances}")
+            st.write(f"### Portfolio Return: {portfolio_return:.2f}%")
+            st.write(f"### Index Return: {index_return:.2f}%")
+            st.write(f"### Number of Unique Funds Selected: {unique_funds_count}")
+            st.write(f"### Number of Rebalances: {num_rebalances}")
 
-            # Show final selected funds dataframe
+            #st.write("### Final Portfolio - Rebalancing")
             #st.dataframe(df_top_rebalance_bt)
 
 # If df_top_current exists, display it
 if st.session_state.df_top_current is not None:
-    st.write("### Top Selected Funds")
+    st.write("### Portfolio - No rebalancing")
     st.dataframe(st.session_state.df_top_current)
 
     # Visualization button

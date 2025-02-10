@@ -126,7 +126,3 @@ def mf_returns_calculations(df_mf, df_index):
     
     results_df = pd.DataFrame(results)
     return results_df
-
-    
-    
-    
