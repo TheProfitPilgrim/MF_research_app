@@ -55,7 +55,7 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
     for i in between_rebalance_return_arr:
         portfolio_value = portfolio_value*(1+i/100)
     
-    portfolio_return = ((portfolio_value / 1000) - 1) * 100 
+    portfolio_return = ((portfolio_value-1000)/ 1000) * 100 
 
     index_start = df_index_raw[df_index_raw["Date"] >= start_date].sort_values(by="Date").head(1)
     index_end = df_index_raw[df_index_raw["Date"] <= end_date].sort_values(by="Date").tail(1)
