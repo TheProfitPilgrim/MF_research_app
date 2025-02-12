@@ -1,13 +1,10 @@
 import pandas as pd
 import numpy as np
-import os
-
-
-''' Function gets 2 data frames as input - one for the MF and one for the Index and calculates different types of return over various time periods like 1 year, 3 month etc and returns a data frame containing all the differnt funds and their returns '''
 
 def mf_returns_calculations(df_mf, df_index):
     
     ''' Convert the date columns in both data frames to correct format in case it already isn't'''
+    
     df_mf["nav_date"] = pd.to_datetime(df_mf["nav_date"], format = '%d/%m/%Y')
     df_index["Date"] = pd.to_datetime(df_index["Date"], format = '%d/%m/%Y')
     
@@ -24,19 +21,18 @@ def mf_returns_calculations(df_mf, df_index):
     4. A column name which has the NAV data
     Outputs : The cumulative return for the data for the specific period or Nan 
     '''
-    def period_cumulative_return(data, period_in_months, end_date, nav_column_name):
-        '''We are going back by N months from the latest date to fetch the start date'''
-        
-        start_date = end_date - pd.DateOffset(months=period_in_months)
+    def period_cumulative_return(data, return_period_in_months, end_date, nav_column_name):
+                
+        return_period_start_date = end_date - pd.DateOffset(months=return_period_in_months)
         
         ''' Different funds have different time since inception. It doesn't make sense to calculate the 5 year return for a fund which has existed only for 6 months. This validation ensures that only applicable returns are shown for each fund and the rest is NaN '''
         
-        if data["nav_date"].min() > start_date:
+        if data["nav_date"].min() > return_period_start_date:
             return np.nan
         
         '''To get all the nav data for your required time period using start and end dates'''
         
-        data_period = data[(data["nav_date"] >= start_date) & (data["nav_date"] <= end_date)]
+        data_period = data[(data["nav_date"] >= return_period_start_date) & (data["nav_date"] <= end_date)]
         
         '''Actual cumulative return calculations'''
         
@@ -51,14 +47,14 @@ def mf_returns_calculations(df_mf, df_index):
     '''Iterating through different funds'''
     for fund in fund_names : 
         fund_data = df_mf[df_mf["scheme_name"] == fund]
-        start_date = fund_data["nav_date"].min()
+        return_period_start_date = fund_data["nav_date"].min()
         end_date = fund_data["nav_date"].max()
         
         '''Finding all time cumulative return and total days since inception'''
-        start_nav = fund_data.loc[fund_data["nav_date"] == start_date, "nav"].values[0]
+        start_nav = fund_data.loc[fund_data["nav_date"] == return_period_start_date, "nav"].values[0]
         end_nav = fund_data.loc[fund_data["nav_date"] == end_date, "nav"].values[0]
         mf_alltime_return = (end_nav - start_nav) / start_nav * 100
-        total_days = (end_date - start_date).days
+        total_days = (end_date - return_period_start_date).days
         
         '''Finding various period returns'''
         fund_3m_return = period_cumulative_return(fund_data, 3, end_date, "nav")
@@ -93,14 +89,14 @@ def mf_returns_calculations(df_mf, df_index):
         mf_annualised_alltime_return = ((1 + (mf_alltime_return) / 100)**(365/total_days)-1)*100
         
         '''Fetching index data for the same dates of the fund's - Date matching'''
-        index_data = df_index[(df_index["Date"] >= start_date) & (df_index["Date"] <= end_date)]
+        index_data = df_index[(df_index["Date"] >= return_period_start_date) & (df_index["Date"] <= end_date)]
         
         if index_data.empty:
             index_alltime_return = np.nan
             index_annualized_alltime_return = np.nan
             excess_annualised_alltime_return = np.nan
         else:
-            start_index = index_data.loc[index_data["Date"] == start_date, "Close"].values[0]
+            start_index = index_data.loc[index_data["Date"] == return_period_start_date, "Close"].values[0]
             end_index = index_data.loc[index_data["Date"] == end_date, "Close"].values[0]
 
             index_alltime_return = (end_index - start_index) / start_index * 100
