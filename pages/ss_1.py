@@ -123,7 +123,7 @@ if "df_top_backtest" in st.session_state:
     if st.button("Visualize Backtest Performance"):
 
         df_top_backtest = st.session_state.df_top_backtest
-        df_portfolio, df_index = filtering_backtest.get_nav_history(df_top_backtest["Fund Name"].tolist(), "NIFTY 50", start_date, end_date)
+        df_portfolio, df_index = filtering_backtest.get_nav_history(df_top_backtest["Fund Name"].tolist(), start_date, end_date)
 
         df_index["Index Value"] = (df_index["Close"] / df_index["Close"].iloc[0]) * 1000
         df_portfolio["NAV Normalized"] = df_portfolio.groupby("scheme_name")["nav"].transform(lambda x: (x / x.iloc[0]) * 1000)
