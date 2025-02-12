@@ -29,7 +29,7 @@ if selection_mode == "Back Test":
     if rebalance_yn == "Yes":
         rebalance_freq = st.selectbox("Rebalancing Frequency", ["Monthly", "Quarterly", "Semi-Annual", "Annual"])
         for key in list(st.session_state.keys()): 
-            if key not in ["pf_bt_yes_return", "index_return", "unique_funds_count", "num_rebalances", "df_top_rebalance_bt"]:
+            if key not in ["all_pfs", "pf_bt_yes_return", "index_return", "num_rebalances"]:
                 del st.session_state[key]
     else:
         for key in list(st.session_state.keys()): 
