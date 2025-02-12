@@ -16,7 +16,7 @@ def validate_rebalancing(start_date, end_date, rebalance_freq):
     }
 
     if duration_days < min_duration[rebalance_freq]:
-        return False, f"Time period is too short for {rebalance_freq} rebalancing. Choose a longer duration or lower frequency."
+        return False, f"Time period is too short for {rebalance_freq} rebalancing. Choose a longer duration."
     return True, None
 
 def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq):
@@ -36,7 +36,6 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
     all_pfs = pd.DataFrame({"Rebalance Date": pd.to_datetime([]), "Portfolio": pd.Series([], dtype="object")})
 
     rebalance_map = {
-        "Monthly": relativedelta(months=1),
         "Quarterly": relativedelta(months=3),
         "Semi-Annual": relativedelta(months=6),
         "Annual": relativedelta(years=1),

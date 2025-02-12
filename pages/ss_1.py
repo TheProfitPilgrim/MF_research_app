@@ -27,7 +27,7 @@ if selection_mode == "Back Test":
     rebalance_yn = st.radio("Do you want rebalancing?", ("Yes", "No"))
     
     if rebalance_yn == "Yes":
-        rebalance_freq = st.selectbox("Rebalancing Frequency", ["Monthly", "Quarterly", "Semi-Annual", "Annual"])
+        rebalance_freq = st.selectbox("Rebalancing Frequency", ["Quarterly", "Semi-Annual", "Annual"])
         for key in list(st.session_state.keys()): 
             if key not in ["all_pfs", "pf_bt_yes_return", "index_return", "num_rebalances"]:
                 del st.session_state[key]
@@ -203,6 +203,6 @@ if "pf_bt_yes_return" in st.session_state:
     st.write(f"### Number of Rebalances: {st.session_state.num_rebalances}")
     
     st.write("### Portfolio Rebalancing History")
-    for index, row in all_pfs.iterrows():
+    for index, row in st.session_state.all_pfs.iterrows():
         with st.expander(f"View Portfolio for {row['Rebalance Date'].date()}"):
             st.write(row["Portfolio"])
