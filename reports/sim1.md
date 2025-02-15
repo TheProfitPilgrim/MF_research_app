@@ -4,12 +4,11 @@ Date : 13/02/2025
 
 [Link to try out](https://mfproject.streamlit.app/ss_1) 
 
-Data : 
+[Data]([url](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_data/sim_1.csv)) 
 
-Tldr; 🥱😴 : 
+Tldr 🥱😴 : 
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much
-3. For track record,   
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
@@ -74,18 +73,14 @@ Graph 3 : Box and Whisker plot to study effect of rebalance_frequency
 
 ![gr3](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_media/Picture3.png)
 
-1. Observation: Based on the above graph, the "No Rebalance" strategy appears to have the highest median portfolio return (the "X" is highest in this box), followed closely by "Annual". "Semi-Annual" is next, and "Quarterly" has the lowest median.
-Interpretation: On average, "No Rebalance" and "Annual" tend to generate the highest portfolio returns compared to the other rebalancing frequencies, according to this plot. "Quarterly" rebalancing tends to generate the lowest returns on average.
+1. Observation: Based on the image, the "Annual" and "No Rebalance" appear to have the highest median portfolio return (the "X" is highest in these boxes). "Semi-Annual" is next, and "Quarterly" has the lowest median.
+Interpretation: On average, "Annual" and "No Rebalance" tend to generate the highest portfolio returns compared to the other rebalancing frequencies. "Quarterly" rebalancing tends to generate the lowest returns on average.
 
-2. Observation: "Quarterly" has the smallest box. The boxes for "Semi-Annual" and "Annual" are larger than "Quarterly," and the box for "No Rebalance" is the largest.
+2. Observation: "Quarterly" has the smallest box and the smallest range of returns. The boxes for "Semi-Annual" and "Annual" are larger than "Quarterly," and the box for "No Rebalance" is larger than the rest.
 Interpretation: "Quarterly" rebalancing demonstrates the most consistent returns (least variability) within the middle 50% of the data. "No Rebalance" exhibits the least consistent returns.
 
-3. Observation: "Quarterly" has the shortest whiskers. The whiskers for "Semi-Annual" are longer than "Quarterly's." "Annual" is longer than "Semi-Annual", and "No Rebalance" has by far the longest upper whisker.
-Interpretation: "Quarterly" rebalancing results in the smallest overall range of returns (most consistent). "No Rebalance" can achieve higher maximums because it has the longest upper whisker but it also has much lower returns.
-
-4. Observation: "Quarterly" has a couple of outliers on the high end (above the upper whisker). "No Rebalance" has one very high outlier.
-Interpretation: "Quarterly" rebalancing occasionally leads to exceptionally high returns. "No Rebalance" shows that there was at least one year in the simulation where it drastically overperformed.
-
+3.Observation: "Quarterly" has two outlier on the high end (above the upper whisker). "No Rebalance" has two outlier on the high end.
+Interpretation: "Quarterly" and "No Rebalance" rebalancing occasionally leads to exceptionally high returns compared to the rest.
 
 ## 1.2 : Studying number of funds in portfolio 
 
