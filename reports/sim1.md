@@ -4,7 +4,7 @@ Date : 13/02/2025
 
 [Link to try out](https://mfproject.streamlit.app/ss_1) 
 
-[Data]([url](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_data/sim_1.csv)) 
+[Data](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_data/sim_1.csv) 
 
 Tldr 🥱😴 : 
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
