@@ -79,7 +79,7 @@ Interpretation: On average, "Annual" and "No Rebalance" tend to generate the hig
 2. Observation: "Quarterly" has the smallest box and the smallest range of returns. The boxes for "Semi-Annual" and "Annual" are larger than "Quarterly," and the box for "No Rebalance" is larger than the rest.
 Interpretation: "Quarterly" rebalancing demonstrates the most consistent returns (least variability) within the middle 50% of the data. "No Rebalance" exhibits the least consistent returns.
 
-3. Observation: "Quarterly" has two outlier on the high end (above the upper whisker). "No Rebalance" has two outlier on the high end.
+4. Observation: "Quarterly" has two outlier on the high end (above the upper whisker). "No Rebalance" has two outlier on the high end.
 Interpretation: "Quarterly" and "No Rebalance" rebalancing occasionally leads to exceptionally high returns compared to the rest.
 
 ## 1.2 : Studying number of funds in portfolio 
