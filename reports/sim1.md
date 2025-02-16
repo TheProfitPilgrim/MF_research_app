@@ -73,7 +73,7 @@ Graph 3 : Box and Whisker plot to study effect of rebalance_frequency
 
 ![gr3](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_media/Picture3.png)
 
-1. Observation: Based on the image, the "Annual" and "No Rebalance" appear to have the highest median portfolio return (the "X" is highest in these boxes). "Semi-Annual" is next, and "Quarterly" has the lowest median.
+1. Observation : The "Annual" and "No Rebalance" appear to have the highest median portfolio return (the "X" is highest in these boxes). "Semi-Annual" is next, and "Quarterly" has the lowest median.
 Interpretation: On average, "Annual" and "No Rebalance" tend to generate the highest portfolio returns compared to the other rebalancing frequencies. "Quarterly" rebalancing tends to generate the lowest returns on average.
 
 2. Observation: "Quarterly" has the smallest box and the smallest range of returns. The boxes for "Semi-Annual" and "Annual" are larger than "Quarterly," and the box for "No Rebalance" is larger than the rest.
