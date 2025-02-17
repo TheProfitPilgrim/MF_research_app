@@ -117,6 +117,6 @@ Graph 5 : Pivot chart to study effect of min_days
 
 ![gr5](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_media/Picture5.png)
 
-As expected, the returns of the portfolio increase as we reduce the need for a track record. Take for example funds with ~100 days track record. It means that the fund was formed 3 months ago. And in the bull market peak, touching Nifty 26k levels, it is only expected that these funds have insanely good "All-time" alpha. 
+As expected, the returns of the portfolio increase as we reduce the need for a track record. Take for example funds with ~100 days track record. It means that the fund was formed 3 months ago. And in the bull market peak, with Nifty touching 26k levels, it is only expected that these funds have insanely good "All-time" alpha. 
 
 Sometime in the future, we'd have to strike an ideal balance in this aspect to prevent selecting funds with a highly biased sample data period. 
