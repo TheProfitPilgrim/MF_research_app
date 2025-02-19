@@ -1,15 +1,14 @@
 import streamlit as st
 import os
 
-# Function to read markdown files
+st.set_page_config(layout="wide")
+
 def read_markdown_file(markdown_file):
     with open(markdown_file, "r", encoding="utf-8") as file:
         return file.read()
 
-# Define the correct path to the reports folder
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), "..", "reports")
 
-# Mapping selection options to markdown files
 content_map = {
     "SS_1 Report": os.path.join(REPORTS_DIR, "Report ss_1.md"),
     "Ideal Rebalancing Frequency": os.path.join(REPORTS_DIR, "Ideal rebalancing frequency.md"),
@@ -17,10 +16,8 @@ content_map = {
 
 st.title("Reports")
 
-# Selection box for choosing a markdown file
 selected_report = st.selectbox("Select a report:", list(content_map.keys()))
 
-# Display the selected markdown content
 if selected_report:
     markdown_file = content_map[selected_report]
     try:
