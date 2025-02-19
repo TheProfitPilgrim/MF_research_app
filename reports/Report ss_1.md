@@ -59,7 +59,7 @@ Effect of Note 1 in this section : I've considered 400 days which is ~1 year. So
 
 Graph 1 : Grouping each rebalancing frequency and finding the average of portfolio returns across different time periods 
 
-![gr1](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_media/Picture1.png)
+![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture1.png)
 
 Graph 2 : The different portfolio returns for each time period
 
