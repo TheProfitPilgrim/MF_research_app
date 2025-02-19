@@ -15,10 +15,10 @@ content_map = {
     "Ideal Rebalancing Frequency": os.path.join(REPORTS_DIR, "Ideal rebalancing frequency.md"),
 }
 
-st.title("Markdown Viewer")
+st.title("Reports")
 
 # Selection box for choosing a markdown file
-selected_report = st.selectbox("Select a section:", list(content_map.keys()))
+selected_report = st.selectbox("Select a report:", list(content_map.keys()))
 
 # Display the selected markdown content
 if selected_report:
