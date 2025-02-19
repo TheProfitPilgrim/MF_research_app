@@ -9,6 +9,7 @@ Date : 13/02/2025
 Tldr 🥱😴 : 
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much
+3. As the track record requirement of the fund decreases, the portfolio returns increase
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
@@ -96,3 +97,26 @@ For number of funds in an equiweighted portfolio, for :
    * Quarterly and Semi-Annual : No of funds in the portfolio doesn't seem to matter that much
 
 Overall, the number of funds forming the portfolio doesn't seem to affect the portfolio return much for an equiweighted case
+
+## 1.3 : Studying min_days in portfolio 
+
+As discussed in note 1, the data points decrease as we keep increaing the min_days : 
+| min_days | No. of data points (out of 40) |
+|----------|--------------------------------|
+| 100      | 40                             |
+| 400      | 36                             |
+| 700      | 36                             |
+| 1000     | 32                             |
+| 1300     | 28                             |
+| 1600     | 24                             |
+| 2000     | 20                             |
+
+But since average returns is being used, it is still useful for comparison.
+
+Graph 5 : Pivot chart to study effect of min_days
+
+![gr5](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_media/Picture5.png)
+
+As expected, the returns of the portfolio increase as we reduce the need for a track record. Take for example funds with ~100 days track record. It means that the fund was formed 3 months ago. And in the bull market peak, with Nifty touching 26k levels, it is only expected that these funds have insanely good "All-time" alpha. 
+
+Sometime in the future, we'd have to strike an ideal balance in this aspect to prevent selecting funds with a highly biased sample data period. 
