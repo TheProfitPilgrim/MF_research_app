@@ -11,7 +11,6 @@ REPORTS_DIR = os.path.join(os.path.dirname(__file__), "..", "reports")
 
 content_map = {
     "SS_1 Report": os.path.join(REPORTS_DIR, "Report ss_1.md"),
-    "Ideal Rebalancing Frequency": os.path.join(REPORTS_DIR, "Ideal rebalancing frequency.md"),
 }
 
 st.title("Reports")
