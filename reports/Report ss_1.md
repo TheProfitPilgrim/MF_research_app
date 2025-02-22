@@ -39,9 +39,9 @@ Suppose we set min_days as 1000 that ~3 yrs and start date somewhere in 2015, SS
      
 * In each section, some of the inputs from above will be kept constant and some others will be allowed to change to see the effect that they have on the overall portfolio performance  
 
-## Section 1
+## Section 1 : Studying the variables in ss_1
 
-Effect of Note 1 in this section : I've considered 400 days which is ~1 year. So for the average calculations, I'm considering up to the recent 9 year performances instead of 10. 
+Effect of Note 1 in this section : If've considered 400 days which is ~1 year, for the average calculations, I'm considering up to the recent 9 year performances instead of 10 (10-years is the span of total raw data available in the csv). 
 
 ## 1.1 : Studying rebalance frequencies
 
@@ -59,21 +59,18 @@ Effect of Note 1 in this section : I've considered 400 days which is ~1 year. So
 
 Graph 1 : Grouping each rebalancing frequency and finding the average of portfolio returns across different time periods 
 
-![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture1.png)
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture1.png)
 
 Graph 2 : The different portfolio returns for each time period
 
-![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture2.png)
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture2.png)
 
 * The X-axis in the above graph is the time period between start and end date in years
-* It is clear that the Quarterly and Semi-Annual reblancing perform worse than the Annual and No rebalancing cases. However, between the Annual and No rebalancing cases, there isn't a clear winner as of now. But this is for a single case of top_n_alpha.
-
-Lets see the effect of different rebalancing frequencies' behaviour if the top_n_alpha (no. of funds in portfolio) is changed. The top_n_alpha values used for this plot are 5, 10, 20, 50, 100
+* It is clear that the Quarterly and Semi-Annual reblancing perform worse than the Annual and No rebalancing cases. However, between the Annual and No rebalancing cases, there isn't a clear winner as of now.
 
 Graph 3 : Box and Whisker plot to study effect of rebalance_frequency
 
-![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture3.png)
-
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture3.png)
 
 1. Observation : The "Annual" and "No Rebalance" appear to have the highest median portfolio return (the "X" is highest in these boxes). "Semi-Annual" is next, and "Quarterly" has the lowest median.
 Interpretation: On average, "Annual" and "No Rebalance" tend to generate the highest portfolio returns compared to the other rebalancing frequencies. "Quarterly" rebalancing tends to generate the lowest returns on average.
@@ -84,14 +81,27 @@ Interpretation: "Quarterly" rebalancing demonstrates the most consistent returns
 4. Observation: "Quarterly" has two outlier on the high end (above the upper whisker). "No Rebalance" has two outlier on the high end.
 Interpretation: "Quarterly" and "No Rebalance" rebalancing occasionally leads to exceptionally high returns compared to the rest.
 
+The Annual or No rebalancing frequencies seemed to give the maximum returns. But this is far from conclusive - there are numerous rebalancing frequencies (like 18 or 24 months) that can be tested out between rebalancing once in 12 months and not rebalancing at all. 
+
+Consider 3 additional rebalancing frequencies,  18, 24 and 36 months,  apart from the original four - 3, 6 and 12 months and No rebalance and compare them. 
+
+The data points are reduced for it to make logical sense. If the rebalance frequency is set to "Once in 36 months" when the start and end date only span 2 yrs (24 months), then the 36 month will act as a "No rebalancing" case thus not being useful for comparison. Thus for this experiment, the start and end date chosen are greater than 3 years apart. 
+
+The number of funds in the portfolio (top_n_alpha) has been varied and the min track record criteria has been taken to be 400 days. 
+
+Graph 4 : Comparison of arithmetic mean of cumulative portfolio returns for different rebalancing_frequency 
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture6.png)
+
 ## 1.2 : Studying number of funds in portfolio 
+
+The above was for a single value of top_n_alpha (20). Lets see the effect of different rebalancing frequencies' behaviour if the top_n_alpha (no. of funds in portfolio) is changed. The top_n_alpha values used for this plot are 5, 10, 20, 50, 100
 
 * Exact same simulation as 1.1 but with 1 change, the number of funds in the portfolio (top_n_alpha) is varied. The top_n_alpha used are 5,10,20(same as 1.1), 50, 100, 200 and ALL the funds. 
 
-Graph 4 : Pivot chart to study effect of top_n_alpha
+Graph 5 : Pivot chart to study effect of top_n_alpha
 
-![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture4.png)
-
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture4.png)
 
 For number of funds in an equiweighted portfolio, for :
    * No rebalancing case : Clear trend of - lesser the number of funds in the portfolio, better the returns
@@ -115,11 +125,33 @@ As discussed in note 1, the data points decrease as we keep increaing the min_da
 
 But since average returns is being used, it is still useful for comparison.
 
-Graph 5 : Pivot chart to study effect of min_days
+Graph 6 : Pivot chart to study effect of min_days
 
-![gr1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture5.png)
-
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture5.png)
 
 As expected, the returns of the portfolio increase as we reduce the need for a track record. Take for example funds with ~100 days track record. It means that the fund was formed 3 months ago. And in the bull market peak, with Nifty touching 26k levels, it is only expected that these funds have insanely good "All-time" alpha. 
 
 Sometime in the future, we'd have to strike an ideal balance in this aspect to prevent selecting funds with a highly biased sample data period. 
+
+## Section 2 : Effect of date of portfolio creation on the portfolio return 
+
+## 2.1 : 3 Year Period
+
+Sorted by all time cumulative alpha
+No of funds in each portfolio (top_n_alpha)   = 20 
+Track record (min_days)                       = 1000 days
+Start date                                    = 01/01/2022
+End date                                      = 01/01/2025
+New portfolio is formed                       = every month
+No. of portfolios                             = 36 - 1 = 35 (We cannot get the results of the most recently formed portfolio)
+
+Date is matched with each portfolio for calculating the Index return
+
+Graph 7 : Area Chart to compare Portfolio vs Index Returns for the 35 portfolios formed
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture7.png)
+
+
+
+
+
