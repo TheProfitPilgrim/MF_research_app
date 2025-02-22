@@ -135,7 +135,7 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 
 ## Section 2 : Effect of date of portfolio creation on the portfolio return 
 
-## 2.1 : 3 Year Period
+## 2.1 : Three Year Period
 
 * Sorted by all time cumulative alpha
 * No of funds in each portfolio (top_n_alpha)   = 20 
