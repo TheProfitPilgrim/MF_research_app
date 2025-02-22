@@ -144,6 +144,7 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 * End date                                      = 01/01/2025
 * New portfolio is formed                       = every month
 * No. of portfolios                             = 36 - 1 = 35 (We cannot get the results of the most recently formed portfolio)
+* No rebalancing - portfolio is formed and held till end date
 
 Date is matched with each portfolio for calculating the Index return
 
