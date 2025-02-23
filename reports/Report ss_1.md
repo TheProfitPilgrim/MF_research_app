@@ -135,7 +135,7 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 
 ## Section 2 : Effect of date of portfolio creation on the portfolio return 
 
-## 2.1 : Three Year Period
+## 2.1 : One Year Period
 
 * Sorted by all time cumulative alpha
 * No of funds in each portfolio (top_n_alpha)   = 20 
@@ -148,11 +148,27 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 
 Date is matched with each portfolio for calculating the Index return
 
-Graph 7 : Area Chart to compare Portfolio vs Index Returns for the 35 portfolios formed
+Graph 7 : Bar Chart to compare Portfolio vs Index Returns for the 11 portfolios formed
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture7.png)
 
+From the graph, 11 is most recently formed portfolio (formed 1 month ago) and 1 is the portfolio formed 1 year ago. 
 
+## 2.2 : Three Year Period
 
+Graph 8 : Bar Chart to compare Portfolio vs Index Returns for the 35 portfolios formed
 
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture8.png)
+
+## 2.3 : Five Year Period
+
+Graph 9 : Bar Chart to compare Portfolio vs Index Returns for the 59 portfolios formed
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture9.png)
+
+## 2.4 : 10 Year Period
+
+Graph 10 : Bar Chart to compare Portfolio vs Index Returns for all the portfolios formed
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture10.png)
 
