@@ -10,6 +10,7 @@ Tldr 🥱😴 :
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much
 3. As the track record requirement of the fund decreases, the portfolio returns increase
+4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50.
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
@@ -172,3 +173,4 @@ Graph 10 : Bar Chart to compare Portfolio vs Index Returns for all the portfolio
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture10.png)
 
+Thus we can see that if someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50. 
