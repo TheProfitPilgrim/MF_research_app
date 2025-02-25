@@ -3,9 +3,9 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-from pages.ss_scripts.ss1_scripts import rebalancing_backtest
-from pages.ss_scripts.ss1_scripts import filtering_current
-from pages.ss_scripts.ss1_scripts import filtering_backtest
+from pages.ss_scripts.ss1_scripts import rebalancing_backtest_ss1
+from pages.ss_scripts.ss1_scripts import filtering_current_ss1
+from pages.ss_scripts.ss1_scripts import filtering_backtest_ss1
 
 st.set_page_config(layout="wide")
 st.title("Mutual Fund Backtesting App")
@@ -45,14 +45,14 @@ if st.button("Select"):
     if selection_mode == "Current":
         st.write("Fetching current portfolio...")
         
-        df_top_current = filtering_current.get_top_funds(min_days, top_n_alpha)
+        df_top_current = filtering_current_ss1.get_top_funds(min_days, top_n_alpha)
         
         st.session_state.df_top_current = df_top_current
 
     elif selection_mode == "Back Test" and rebalance_yn == "No":
         st.write("Running backtest calculations...")
 
-        df_top_backtest, pf_bt_no_return, index_backtest_return = filtering_backtest.get_top_funds(min_days, top_n_alpha, start_date, end_date)
+        df_top_backtest, pf_bt_no_return, index_backtest_return = filtering_backtest_ss1.get_top_funds(min_days, top_n_alpha, start_date, end_date)
         
         pf_bt_no_return = round(pf_bt_no_return,2)
         index_backtest_return = round(index_backtest_return,2)
@@ -69,14 +69,14 @@ if st.button("Select"):
 
     elif selection_mode == "Back Test" and rebalance_yn == "Yes":
 
-        is_valid, error_msg = rebalancing_backtest.validate_rebalancing(start_date, end_date, rebalance_freq)
+        is_valid, error_msg = rebalancing_backtest_ss1.validate_rebalancing(start_date, end_date, rebalance_freq)
         
         if not is_valid:
             st.error(error_msg)
         else:
             st.write("Running backtest with rebalancing calculations...")
 
-            all_pfs, pf_bt_yes_return, index_return, num_rebalances = rebalancing_backtest.backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq)
+            all_pfs, pf_bt_yes_return, index_return, num_rebalances = rebalancing_backtest_ss1.backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq)
         
             st.session_state.all_pfs = all_pfs
             st.session_state.pf_bt_yes_return = pf_bt_yes_return
@@ -124,7 +124,7 @@ if "df_top_backtest" in st.session_state:
 
         # Get NAV history for selected funds & index
         df_top_backtest = st.session_state.df_top_backtest
-        df_portfolio, df_index = filtering_backtest.get_nav_history(df_top_backtest["Fund Name"].tolist(), start_date, end_date)
+        df_portfolio, df_index = filtering_backtest_ss1.get_nav_history(df_top_backtest["Fund Name"].tolist(), start_date, end_date)
 
         # Normalize to ₹1000 at start_date
         df_index["Index Value"] = (df_index["Close"] / df_index["Close"].iloc[0]) * 1000

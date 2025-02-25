@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 from dateutil.relativedelta import relativedelta
-from pages.ss_scripts.ss1_scripts.filtering_backtest import get_top_funds
+from pages.ss_scripts.ss1_scripts.filtering_backtest_ss1 import get_top_funds
 
 def validate_rebalancing(start_date, end_date, rebalance_freq):
     start_date = pd.to_datetime(start_date)

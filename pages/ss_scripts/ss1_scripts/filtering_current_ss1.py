@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-from pages.ss_scripts.ss1_scripts.calculations import mf_returns_calculations
+from pages.ss_scripts.ss1_scripts.returns_calculations import mf_returns_calculations
 
 def get_top_funds(min_days, top_n_alpha):
     
