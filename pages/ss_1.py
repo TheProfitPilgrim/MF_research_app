@@ -41,18 +41,20 @@ else:
     if key != "df_top_current":
         del st.session_state[key]
 
+index_name = st.selectbox('Choose an index : ',["Nifty 50", "Nifty 500"])
+
 if st.button("Select"):
     if selection_mode == "Current":
         st.write("Fetching current portfolio...")
         
-        df_top_current = filtering_current_ss1.get_top_funds(min_days, top_n_alpha)
+        df_top_current = filtering_current_ss1.get_top_funds(min_days, top_n_alpha, index_name)
         
         st.session_state.df_top_current = df_top_current
 
     elif selection_mode == "Back Test" and rebalance_yn == "No":
         st.write("Running backtest calculations...")
 
-        df_top_backtest, pf_bt_no_return, index_backtest_return = filtering_backtest_ss1.get_top_funds(min_days, top_n_alpha, start_date, end_date)
+        df_top_backtest, pf_bt_no_return, index_backtest_return = filtering_backtest_ss1.get_top_funds(min_days, top_n_alpha, start_date, end_date, index_name)
         
         pf_bt_no_return = round(pf_bt_no_return,2)
         index_backtest_return = round(index_backtest_return,2)
@@ -76,13 +78,12 @@ if st.button("Select"):
         else:
             st.write("Running backtest with rebalancing calculations...")
 
-            all_pfs, pf_bt_yes_return, index_return, num_rebalances = rebalancing_backtest_ss1.backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq)
+            all_pfs, pf_bt_yes_return, index_return, num_rebalances = rebalancing_backtest_ss1.backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq, index_name)
         
             st.session_state.all_pfs = all_pfs
             st.session_state.pf_bt_yes_return = pf_bt_yes_return
             st.session_state.index_return = index_return
-            st.session_state.num_rebalances = num_rebalances
-            
+            st.session_state.num_rebalances = num_rebalances            
 
 if "df_top_current" in st.session_state:
     st.write("### Current Top Funds")
@@ -124,7 +125,7 @@ if "df_top_backtest" in st.session_state:
 
         # Get NAV history for selected funds & index
         df_top_backtest = st.session_state.df_top_backtest
-        df_portfolio, df_index = filtering_backtest_ss1.get_nav_history(df_top_backtest["Fund Name"].tolist(), start_date, end_date)
+        df_portfolio, df_index = filtering_backtest_ss1.get_nav_history(df_top_backtest["Fund Name"].tolist(), start_date, end_date, index_name)
 
         # Normalize to ₹1000 at start_date
         df_index["Index Value"] = (df_index["Close"] / df_index["Close"].iloc[0]) * 1000

@@ -95,9 +95,10 @@ def mf_returns_calculations(df_mf, df_index):
             index_alltime_return = np.nan
             index_annualized_alltime_return = np.nan
             excess_annualised_alltime_return = np.nan
+            print("here000?")
         else:
-            start_index = index_data.loc[index_data["Date"] == return_period_start_date, "Close"].values[0]
-            end_index = index_data.loc[index_data["Date"] == end_date, "Close"].values[0]
+            start_index = index_data.iloc[0]["Close"]
+            end_index = index_data.iloc[-1]["Close"]
 
             index_alltime_return = (end_index - start_index) / start_index * 100
             index_annualized_alltime_return = ((1 + (index_alltime_return / 100)) ** (365 / total_days) - 1) * 100

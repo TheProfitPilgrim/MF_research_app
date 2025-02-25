@@ -19,10 +19,13 @@ def validate_rebalancing(start_date, end_date, rebalance_freq):
         return False, f"Time period is too short for {rebalance_freq} rebalancing. Choose a longer duration."
     return True, None
 
-def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq):
+def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebalance_freq, index_name):
 
     df_mf_raw = pd.read_csv(os.path.join("Data", "Input", "mf_eom.csv"))
-    df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
+    if index_name == "Nifty 50":
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
+    elif index_name == "Nifty 500":
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv"))
 
     df_mf_raw["nav_date"] = pd.to_datetime(df_mf_raw["nav_date"], dayfirst=True)
     df_index_raw["Date"] = pd.to_datetime(df_index_raw["Date"], dayfirst=True)
@@ -45,7 +48,7 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
         
         rebalancing_dates.append(current_date)
         next_rebalance_date = current_date + rebalance_map[rebalance_freq]
-        pf, between_rebalance_pf_return, x  = get_top_funds(min_days, top_n_alpha, current_date, next_rebalance_date)
+        pf, between_rebalance_pf_return, x  = get_top_funds(min_days, top_n_alpha, current_date, next_rebalance_date,index_name)
         between_rebalance_return_arr.append(between_rebalance_pf_return)
         new_row = pd.DataFrame({"Rebalance Date": [current_date], "Portfolio": [pf]})
         all_pfs = pd.concat([all_pfs, new_row], ignore_index=True) 
