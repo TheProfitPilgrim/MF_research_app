@@ -141,10 +141,10 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 * Sorted by all time cumulative alpha
 * No of funds in each portfolio (top_n_alpha)   = 20 
 * Track record (min_days)                       = 1000 days
-* Start date                                    = 01/01/2022
+* Start date                                    = 01/01/2024
 * End date                                      = 01/01/2025
 * New portfolio is formed                       = every month
-* No. of portfolios                             = 36 - 1 = 35 (We cannot get the results of the most recently formed portfolio)
+* No. of portfolios                             = 12 - 1 = 11 (We cannot get the results of the most recently formed portfolio)
 * No rebalancing - portfolio is formed and held till end date
 
 Date is matched with each portfolio for calculating the Index return
