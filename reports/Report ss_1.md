@@ -8,7 +8,7 @@ Date : 13/02/2025
 
 Tldr 🥱😴 : 
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
-2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much
+2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much but general trend is, more concentrated = better returns. 
 3. As the track record requirement of the fund decreases, the portfolio returns increase
 4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 (and that too by almost 2x in most cases).
 
@@ -174,3 +174,23 @@ Graph 10 : Bar Chart to compare Portfolio vs Index Returns for all the portfolio
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture10.png)
 
 Thus we can see that if someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50. 
+
+## 2.5 : Comparison of the formed portfolios vs their benchmark - Nifty 50 vs Nifty 500
+
+The same plots of sections 2.1 - 2.4 is compared with similar plots of that done using Nifty 500 : 
+
+Graph 11 : Bar chart with all 4 for 1 year period
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture11.png)
+
+Graph 12 : Line chart with all 4 for 3 year period
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture12.png)
+
+Graph 13 : Bar chart with all 4 for 5 year period
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture13.png)
+
+Graph 14 : Bar chart with all 4 for 10 year period
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture14.png)
