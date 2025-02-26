@@ -10,7 +10,7 @@ Tldr 🥱😴 :
 1. For rebalancing frequency, either No rebalancing or Annual rebalancing give the best portfolio returns
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much but general trend is, more concentrated = better returns. 
 3. As the track record requirement of the fund decreases, the portfolio returns increase
-4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 (and that too by almost 2x in most cases).
+4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 and Nifty 500 (and that too by almost 2x in most cases).
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
