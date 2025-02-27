@@ -203,8 +203,6 @@ Thus we can see that if someone had used ss_1 to form a portfolio anytime in the
 
 ## 2.3 : Probability of formed portfolio beating Nifty Midcap 100
 
-# Portfolio Performance vs. Nifty Midcap 100
-
 | Time Period  | Outperformance Probability |
 |-------------|--------------------------|
 | One Year    | 9% (1 / 11)              |
