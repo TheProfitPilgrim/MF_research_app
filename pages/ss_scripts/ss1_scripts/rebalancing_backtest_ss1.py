@@ -26,6 +26,8 @@ def backtest_with_rebalancing(start_date, end_date, min_days, top_n_alpha, rebal
         df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
     elif index_name == "Nifty 500":
         df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv"))
+    elif index_name == "Nifty Midcap 100":
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "niftymcap100.csv"))
 
     df_mf_raw["nav_date"] = pd.to_datetime(df_mf_raw["nav_date"], dayfirst=True)
     df_index_raw["Date"] = pd.to_datetime(df_index_raw["Date"], dayfirst=True)

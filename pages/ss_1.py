@@ -41,7 +41,7 @@ else:
     if key != "df_top_current":
         del st.session_state[key]
 
-index_name = st.selectbox('Choose an index : ',["Nifty 50", "Nifty 500"])
+index_name = st.selectbox('Choose an index : ',["Nifty 50", "Nifty 500", "Nifty Midcap 100"])
 
 if st.button("Select"):
     if selection_mode == "Current":

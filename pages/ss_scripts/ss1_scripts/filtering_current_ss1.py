@@ -10,6 +10,8 @@ def get_top_funds(min_days, top_n_alpha, index_name):
         df_index = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
     elif index_name == "Nifty 500" :
         df_index = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv"))
+    elif index_name == "Nifty Midcap 100":
+        df_index = pd.read_csv(os.path.join("Data", "Input", "niftymcap100.csv"))
         
     df = mf_returns_calculations(df_mf, df_index)
    

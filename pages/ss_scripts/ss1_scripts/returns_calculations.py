@@ -49,7 +49,6 @@ def mf_returns_calculations(df_mf, df_index):
         fund_data = df_mf[df_mf["scheme_name"] == fund]
         return_period_start_date = fund_data["nav_date"].min()
         end_date = fund_data["nav_date"].max()
-        
         '''Finding all time cumulative return and total days since inception'''
         start_nav = fund_data.loc[fund_data["nav_date"] == return_period_start_date, "nav"].values[0]
         end_nav = fund_data.loc[fund_data["nav_date"] == end_date, "nav"].values[0]
@@ -95,7 +94,6 @@ def mf_returns_calculations(df_mf, df_index):
             index_alltime_return = np.nan
             index_annualized_alltime_return = np.nan
             excess_annualised_alltime_return = np.nan
-            print("here000?")
         else:
             start_index = index_data.iloc[0]["Close"]
             end_index = index_data.iloc[-1]["Close"]

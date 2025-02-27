@@ -9,7 +9,9 @@ def get_top_funds(min_days, top_n_alpha, start_date, end_date, index_name):
     if index_name == "Nifty 50" :
         df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
     elif index_name == "Nifty 500" :
-        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv")) 
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv"))
+    elif index_name == "Nifty Midcap 100" :
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "niftymcap100.csv"))  
 
     df_mf = df_mf_raw[pd.to_datetime(df_mf_raw['nav_date'], dayfirst=True) <= pd.Timestamp(start_date)].copy()
     df_index = df_index_raw[pd.to_datetime(df_index_raw['Date'], dayfirst=True) <= pd.Timestamp(start_date)].copy()
@@ -72,6 +74,8 @@ def get_nav_history(selected_funds, start_date, end_date, index_name):
         df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty_eom.csv"))
     elif index_name == "Nifty 500" :
         df_index_raw = pd.read_csv(os.path.join("Data", "Input", "nifty500_eom.csv")) 
+    elif index_name == "Nifty Midcap 100" :
+        df_index_raw = pd.read_csv(os.path.join("Data", "Input", "niftymcap100.csv"))  
 
     start_date = pd.to_datetime(start_date,dayfirst=True)
     end_date = pd.to_datetime(end_date,dayfirst=True)
