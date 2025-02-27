@@ -219,3 +219,5 @@ Graph 15, 16, 17, 18 : Above table's data points visualised
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture17.png)
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture18.png)
+
+We can see that someone would have been way better off investing in Nifty Midcap 100 in the past decade compared to the system's portfolio. 
