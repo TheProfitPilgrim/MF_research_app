@@ -1,5 +1,5 @@
 ## Intro
-In [SS 1 _report](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/Report%20ss_1.md)
+In [SS 1 _report](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/Report%20ss_1.md), the suspected reason for the formed Pfs outperforming Nifty 50, 500 but underperforming Nifty Midcap 100 was the Midcap index's price rally. 
 
 The broad goal of this study is to look at different indices's price vs earnings relationship across time in different indices in different markets.
 
@@ -29,10 +29,11 @@ These cover the top 750 cos in Indian market (large cap) ( mcap of the smallest 
 Large Cap Indices : 
 
 * If we consider the S & P 500 data, it is almost a ***century*** of data. The correlation is ~0.974. The Nifty 50 has 25 year data and the correlation is almost the same ~0.973. This goes to show, that in the long run, the earnings and price levels are almost perfectly correlated.
-* This kinda makes sense - large cap stocks are generally more widely followed, more liquid so in some sense, more "efficient". 
+* Nifty Next 50's correlation being lower at 0.933 goes to show that Nifty 50's price follows its earnings more closely. 
 
-Other Indices : 
+Now lets compare the different indices' price correlation vs their earnings **in the same period**
 
+* If micro cap index is included, then the date range is going to be constrained to <5 yrs. So lets compare Nifty 50, Next 50, Midcap 150 and Smallcap 250 over 2016-2025 period. 
 
 
 
