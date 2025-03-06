@@ -11,7 +11,7 @@ Tldr 🥱😴 :
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much but general trend is, more concentrated = better returns. 
 3. As the track record requirement of the fund decreases, the portfolio returns increase
 4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 and Nifty 500 (and that too by almost 2x in most cases).
-5. However portfolios formed using ss_1 severly underperform Nifty Midcap 100 in all time frames. The reason for this is suspected to be the Midcap Index's massive "fragile" rise in Price without the Earnings to back it up - This is investigated in [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
+5. However portfolios formed using ss_1 underperform Nifty Midcap 100 in all time frames. The reason for this is suspected to be the Midcap Index's massive "fragile" rise in Price without the Earnings to back it up - This is investigated in [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
@@ -222,3 +222,8 @@ Graph 15, 16, 17, 18 : Above table's data points visualised
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture18.png)
 
 We can see that someone would have been way better off investing in Nifty Midcap 100 in the past decade compared to the system's portfolio. 
+
+Many of the portfolios formed contained a lot of Midcap and small cap equity funds. If mid and small cap stocks had risen up by a lot more than Nifty 50 and 500, it makes sense that the Index, Mid / small cap funds are going to do so much better than the Nifty 50. 
+
+But was this price outperformance backed by sufficient earnings increase? Is it sustainable? 
+Explored in : [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
