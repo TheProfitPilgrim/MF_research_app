@@ -11,6 +11,7 @@ Tldr 🥱😴 :
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much but general trend is, more concentrated = better returns. 
 3. As the track record requirement of the fund decreases, the portfolio returns increase
 4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 and Nifty 500 (and that too by almost 2x in most cases).
+5. However portfolios formed using ss_1 underperform Nifty Midcap 100 in all time frames. The reason for this is suspected to be the Midcap Index's massive "fragile" rise in Price without the Earnings to back it up - This is investigated in [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
@@ -136,7 +137,9 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 
 ## Section 2 : Effect of date of portfolio creation on the portfolio return 
 
-## 2.1 : One Year Period
+## 2.1 : Probability of formed portfolio beating Nifty 50 
+
+One Year Period
 
 * Sorted by all time cumulative alpha
 * No of funds in each portfolio (top_n_alpha)   = 20 
@@ -155,27 +158,28 @@ Graph 7 : Bar Chart to compare Portfolio vs Index Returns for the 11 portfolios 
 
 From the graph, 11 is most recently formed portfolio (formed 1 month ago) and 1 is the portfolio formed 1 year ago. 
 
-## 2.2 : Three Year Period
+Three Year Period
 
 Graph 8 : Bar Chart to compare Portfolio vs Index Returns for the 35 portfolios formed
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture8.png)
 
-## 2.3 : Five Year Period
+Five Year Period
 
 Graph 9 : Bar Chart to compare Portfolio vs Index Returns for the 59 portfolios formed
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture9.png)
 
-## 2.4 : 10 Year Period
+10 Year Period
 
 Graph 10 : Bar Chart to compare Portfolio vs Index Returns for all the portfolios formed
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture10.png)
 
+Probability of outperformance = 100%
 Thus we can see that if someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50. 
 
-## 2.5 : Comparison of the formed portfolios vs their benchmark - Nifty 50 vs Nifty 500
+## 2.2 : Probability of formed portfolio beating Nifty 50 & Nifty 500
 
 The same plots of sections 2.1 - 2.4 is compared with similar plots of that done using Nifty 500 : 
 
@@ -194,3 +198,32 @@ Graph 13 : Bar chart with all 4 for 5 year period
 Graph 14 : Bar chart with all 4 for 10 year period
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture14.png)
+
+Probability of outperformance = 100%
+Thus we can see that if someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform Nifty 500.
+
+## 2.3 : Probability of formed portfolio beating Nifty Midcap 100
+
+| Time Period  | Outperformance Probability |
+|-------------|--------------------------|
+| One Year    | 9% (1 / 11)              |
+| Three Years | 8.6% (3 / 35)            |
+| Five Years  | 6.7% (4 / 59)            |
+| Ten Years   | 41.37% (48 / 116)        |
+
+Graph 15, 16, 17, 18 : Above table's data points visualised
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture15.png)
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture16.png)
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture17.png)
+
+![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture18.png)
+
+We can see that someone would have been way better off investing in Nifty Midcap 100 in the past decade compared to the system's portfolio. 
+
+Many of the portfolios formed contained a lot of Midcap and small cap equity funds. If mid and small cap stocks had risen up by a lot more than Nifty 50 and 500, it makes sense that the Index, Mid / small cap funds are going to do so much better than the Nifty 50. 
+
+But was this price outperformance backed by sufficient earnings increase? Is it sustainable? 
+Explored in : [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
