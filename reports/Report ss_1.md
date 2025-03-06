@@ -170,7 +170,7 @@ Graph 9 : Bar Chart to compare Portfolio vs Index Returns for the 59 portfolios 
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture9.png)
 
-### 10 Year Period
+10 Year Period
 
 Graph 10 : Bar Chart to compare Portfolio vs Index Returns for all the portfolios formed
 
