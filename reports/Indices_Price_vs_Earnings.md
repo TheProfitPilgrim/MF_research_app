@@ -33,7 +33,9 @@ Large Cap Indices :
 
 Now lets compare the different indices' price correlation vs their earnings **in the same period**
 
-* If micro cap index is included, then the date range is going to be constrained to <5 yrs. So lets compare Nifty 50, Next 50, Midcap 150 and Smallcap 250 over 2016-2025 period. 
+* If micro cap index is included, then the date range is going to be constrained to <5 yrs. So lets compare the correlations of Nifty 50, Next 50, Midcap 150 and Smallcap 250 over 2016-2025 period.
+
+![Graph1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture19.png) 
 
 
 
