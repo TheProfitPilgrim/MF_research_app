@@ -139,7 +139,7 @@ Sometime in the future, we'd have to strike an ideal balance in this aspect to p
 
 ## 2.1 : Probability of formed portfolio beating Nifty 50 
 
-###One Year Period
+One Year Period
 
 * Sorted by all time cumulative alpha
 * No of funds in each portfolio (top_n_alpha)   = 20 
@@ -158,13 +158,13 @@ Graph 7 : Bar Chart to compare Portfolio vs Index Returns for the 11 portfolios 
 
 From the graph, 11 is most recently formed portfolio (formed 1 month ago) and 1 is the portfolio formed 1 year ago. 
 
-### Three Year Period
+Three Year Period
 
 Graph 8 : Bar Chart to compare Portfolio vs Index Returns for the 35 portfolios formed
 
 ![gr](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture8.png)
 
-### Five Year Period
+Five Year Period
 
 Graph 9 : Bar Chart to compare Portfolio vs Index Returns for the 59 portfolios formed
 
