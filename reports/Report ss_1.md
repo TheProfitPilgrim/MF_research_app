@@ -11,6 +11,7 @@ Tldr 🥱😴 :
 2. Number of funds in the portfolio doesn't really seem to affect the portfolio returns that much but general trend is, more concentrated = better returns. 
 3. As the track record requirement of the fund decreases, the portfolio returns increase
 4. If someone had used ss_1 to form a portfolio anytime in the past decade, they are guaranteed to outperform the Nifty 50 and Nifty 500 (and that too by almost 2x in most cases).
+5. However portfolios formed using ss_1 severly underperform Nifty Midcap 100 in all time frames. The reason for this is suspected to be the Midcap Index's massive "fragile" rise in Price without the Earnings to back it up - This is investigated in [Indices : Price vs Earnings](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/index_earn_vs_price.md)
 
 ### Goals and assumptions : 
 * Test a selection system based on 2 parameters :
