@@ -28,8 +28,24 @@ These cover the top 750 cos in Indian market (large cap) ( mcap of the smallest 
 
 Large Cap Indices : 
 
-* If we consider the S & P 500 data, it is almost a ***century*** of data. The correlation is ~0.974. The Nifty 50 has 25 year data and the correlation is almost the same ~0.973. This goes to show, that in the long run, the earnings and price levels are almost perfectly correlated.
-* Nifty Next 50's correlation being lower at 0.933 goes to show that Nifty 50's price follows its earnings more closely. 
+* If we consider the S&P 500 data, it is almost a ***century*** of data. The correlation is ~0.974. The Nifty 50 has 25 year data and the correlation is almost the same ~0.973. This goes to show, that in the long run, the earnings and price levels are almost perfectly correlated.
+* Nifty Next 50's correlation being lower at 0.933 goes to show that Nifty 50's price follows its earnings more closely.
+
+* But this is the long term relationship of the indices vs their earnings - In general, earnings and price of indices increase and decrease together. 
+* However, in the short term, they don't always rise and fall together, there is quite some variation. We can see how correlation changes in the short term (1 year rolling window) for Nifty 50 and S&P 500 by plotting the rolling correlation graph.
+
+![Graph1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture24.png)
+
+![Graph1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture25.png)
+
+We can use the dates to attribute reasons for divergance b/w price and earnings : https://en.wikipedia.org/wiki/Stock_market_crashes_in_India#
+
+* Note : A bottom in the rolling correlation graph does not convey any info on the actual movement of the Price vs Earnings - just that one is moving without a movement in another - it could be :
+
+1. Price decrease when earnings has not really fallen / maybe even increase 
+2. Price increase when earnings has not really increased / maybe even fallen
+
+If both had risen or fallen together, the correlation would be positive.
 
 Now lets compare the different indices' price correlation vs their earnings **in the same period**
 
@@ -37,5 +53,13 @@ Now lets compare the different indices' price correlation vs their earnings **in
 
 ![Graph1](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture19.png) 
 
+Comparitively, the much lower correlation in Nifty Midcap 150 and Small cap 250 is indicative of the divergence in price and earnings changes : 
 
+| ![Graph2](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture20.png) | ![Graph3](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture21.png) |
+|-----------------------|-----------------------|
+| Nifty 50 | Nifty Next 50 |
+
+| ![Graph4](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture22.png) | ![Graph5](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture23.png) |
+|-----------------------|-----------------------|
+| Nifty Midcap 150 | Nifty Smallcap 250 |
 
