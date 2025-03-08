@@ -1,6 +1,8 @@
 ## Intro
 In [SS 1 _report](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/Report%20ss_1.md), the suspected reason for the formed Pfs outperforming Nifty 50, 500 but underperforming Nifty Midcap 100 was the Midcap index's price rally. 
 
+### *Click on any graph to view it in a new tab*
+
 Drawbacks / Issues with this analysis : 
 1. Though it looks roughly linearly related, correlation might not be a great way to measure.
 
@@ -48,9 +50,9 @@ Large Cap Indices :
 
 * However, in the short term, they don't always rise and fall together. There is quite some variation. We can see how correlation changes in the short term (1 year rolling window) for Nifty 50 and S&P 500 by plotting the rolling correlation graph.
 
-![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture24.png)
-
-![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture25.png)
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture24.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture25.png) |
+|-----------------------|-----------------------|
+| Nifty 50 | S&P 500 |
 
 We can use the dates to attribute reasons for divergance b/w price and earnings : https://en.wikipedia.org/wiki/Stock_market_crashes_in_India#
 
@@ -61,9 +63,12 @@ We can use the dates to attribute reasons for divergance b/w price and earnings 
 
 If both had risen or fallen together, the correlation would be positive.
 
-To see how the actual movement has occured, we can take a look at the following graph (% YOY change for the date span) of Nifty 50 : 
+To see how the actual movement has occured, we can take a look at the **bar** graphs below (% YOY change for the date span) : 
 
-![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture26.png)
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture30.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture26.png) |
+|-----------------------|-----------------------|
+| Nifty 50 Line | Nifty 50 YOY % change |
+
 
 Now lets compare the different indices' price correlation vs their earnings **in the same period**
 
@@ -88,10 +93,12 @@ The 4 cases that are interesting are :
 
 ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture27.png) 
   
-  * The market as soon as it came to know of the lockdown, anticipated that many industries like Aviation / Tourism are not going to be functional and thus fell predicting a fall in corporate earnings (blue).
-  * The fall in earnings did eventually happen - so the market wasn't entirely foolish.
+  * The market as soon as it came to know of the lockdown, anticipated that many industries like Aviation / Tourism are not going to be functional and thus fell predicting a fall in corporate earnings (blue line dips and reverts before red wrt X axis).
+  * The fall in earnings did later happen - so the market wasn't entirely foolish.
   * If someone considered the Covid bottom as a buying opportunity, it can be attributed to these reasons : 
     * Covid will not continue on for say 3 or 5 years and that things will come back to normal ==> Rebound in earnings and price (Long-term long)
     * The market overreacted to the expected fall in earnings ==> Earnings turn out to be better than anticipated even with covid ==> Market corrects for this excess decline (short-term long)
+  * After all the vaccinations and lockdown removal, the market again bounced back to pre-covid levels before the earnings actually caught up and even overshot too much on the upper side.
 
-  * After all the vaccinations and lockdown removal, the market again bounced back to pre-covid levels before the earnings actually caught up and even overshot too much on the upper side     
+
+
