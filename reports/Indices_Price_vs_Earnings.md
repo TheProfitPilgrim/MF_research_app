@@ -69,6 +69,22 @@ To see how the actual movement has occured, we can take a look at the **bar** gr
 |-----------------------|-----------------------|
 | Nifty 50 Line | Nifty 50 YOY % change |
 
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture31.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture28.png) |
+|-----------------------|-----------------------|
+| Nifty Next 50 Line | Nifty Next 50 YOY % change |
+
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture32.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture29.png) |
+|-----------------------|-----------------------|
+| Nifty Midcap 150 Line | Nifty Midcap  150 Semi-annual % change |
+
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture35.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture36.png) |
+|-----------------------|-----------------------|
+| Nifty Smallcap 250 Line | Nifty Smallcap 250 Semi-annual % change |
+
+| ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture33.png) | ![Graph](https://raw.githubusercontent.com/TheProfitPilgrim/MF_Backtest_app/main/reports/report_media/Picture37.png) |
+|-----------------------|-----------------------|
+| Nifty microcap 250 Line | Nifty microcap 250 Semi-annual % change |
+
 
 Now lets compare the different indices' price correlation vs their earnings **in the same period**
 
