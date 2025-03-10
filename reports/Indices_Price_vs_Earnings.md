@@ -116,5 +116,11 @@ The 4 cases that are interesting are :
     * The market overreacted to the expected fall in earnings ==> Earnings turn out to be better than anticipated even with covid ==> Market corrects for this excess decline (short-term long)
   * After all the vaccinations and lockdown removal, the market again bounced back to pre-covid levels before the earnings actually caught up and even overshot too much on the upper side.
 
+Thus, even though in the long term, the price move as per earnings, they do deviate in the short term thus providing potential opportunities.
 
+### Is it possible to create a simple statistical indicator which points towards the general direction that the index based on likelihood using : 
+  * Past index data and market behaviour
+  * Latest PE and Price of index
+
+[M1 : Reversion to mean idea](https://github.com/TheProfitPilgrim/MF_Backtest_app/blob/main/reports/report_src/mf_index_analysis/index_probability_model.ipynb)
 
