@@ -1,6 +1,5 @@
 import streamlit as st
-import pandas as pd
-from  scipy.stats import skewnorm 
+from pages.ss_scripts.index_ptr_scripts.skew_norm_cdf import calc_prob
 
 st.set_page_config(layout="wide")
 
@@ -13,41 +12,7 @@ st.write("### Enter current index level :")
 current_price = st.number_input("⤵️", min_value=1 , value=22000)
 
 st.write("### Enter current index PE :")
-current_pe = st.number_input("⤵️", min_value=1 , value=20)
-
-def calc_prob(current_in_price, current_in_pe):
-    
-    df = pd.read_csv(r"Data\\india_data\\nifty50_data.csv")
-    df["Date"] = pd.to_datetime(df["Date"], dayfirst=True)
-    df.sort_values("Date", inplace=True)
-    
-    pe_median_latest = df['PE'].median()
-    
-    hist_deviations = []
-    for i in range (len(df)):
-        pe_median = df['PE'].median()
-        price_fair = pe_median * df["Earnings"].tail(1).iloc[0]
-        date = df["Date"].tail(1).iloc[0]
-        deviation_price = ( df["Close"].tail(1).iloc[0] - price_fair) / price_fair * 100
-        hist_deviations.append(round(deviation_price,2))
-        df = df.iloc[:-1]
-    
-    current_earnings = current_price / current_pe
-
-    price_fair = pe_median_latest*current_earnings
-    x = float((current_price - price_fair) / price_fair * 100)
-
-    parameters = skewnorm.fit(hist_deviations)
-    print(type(parameters))
-    a, loc, scale = parameters
-    cdf = skewnorm.cdf(x, a , loc=loc, scale=scale)
-
-    prob_increasing = 1 - cdf
-
-    prob_decreasing = cdf
-
-    return price_fair, x, prob_increasing, prob_decreasing
-    
+current_pe = st.number_input("⤵️", min_value=1 , value=20)    
 
 if st.button("Flip"):
     price_fair, x, prob_increasing, prob_decreasing = calc_prob(current_price, current_pe)
