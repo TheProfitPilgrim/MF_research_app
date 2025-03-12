@@ -1,6 +1,4 @@
-# Visit
-
-mfproject.streamlit.app
+[# Visit](mfproject.streamlit.app)
 
 ### Main page 
 
