@@ -32,4 +32,4 @@ def calc_prob(current_price, current_pe):
 
     prob_decreasing = cdf
 
-    return price_fair, x, prob_increasing, prob_decreasing
+    return price_fair, x, prob_increasing, prob_decreasing, hist_deviations, a, loc, scale
