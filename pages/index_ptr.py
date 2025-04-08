@@ -97,6 +97,30 @@ if st.button("Flip") :
         
         with col2:
             st.pyplot(plt)
+        
+        #graph 3
+
+        with col1:
+            for i in range(5):
+                st.write("")
+            st.write("### $Equity_{Allocation} = 25 + \\frac {Probability_{Increasing}}{100} \\times 50$")
+            st.write("### $Debt_{Allocation} = 100 - Equity_{Allocation}$")
+            st.write(f"### Probability Increasing = {prob_increasing} %")
+
+        eq_alloc = 25 + (prob_increasing / 100) * 50
+        debt_alloc = 100 - eq_alloc
+        
+        labels = ['Equity Allocation', 'Debt Allocation']
+        sizes = [eq_alloc, debt_alloc]
+        colors = ['#66b3ff', '#ff9999']
+        explode = (0.1, 0)
+
+        fig, ax = plt.subplots(figsize=(6, 6))
+        ax.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%')
+        ax.axis('equal')
+        fig.legend()
+        with col2:  
+            st.pyplot(fig)
 
     else : 
             a = 1
