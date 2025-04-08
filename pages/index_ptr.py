@@ -49,6 +49,8 @@ if st.button("Flip") :
         current_x = x
         st.write(f"### Probability of index increasing: {prob_increasing:.2f} %")
         st.write(f"### Probability of index decreasing: {prob_decreasing:.2f} %")
+        st.write(r"### $Regression \ Price_{current} = -343.73 + 23.3 \times Earnings_{current}$")
+        st.write("")
         
         if isinstance(best_params, dict):
             shape_keys = [k for k in best_params if k not in ("loc", "scale")]
