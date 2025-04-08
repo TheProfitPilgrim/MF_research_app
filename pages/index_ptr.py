@@ -43,7 +43,7 @@ if st.button("Flip") :
         st.pyplot(fig)
 
     elif selection_mode == "Simple Linear Regression" :
-        pred_price, x, prob_increasing, prob_decreasing, data, best_params, best_name = calc_prob_lr(current_price, current_pe)
+        pred_price, x, prob_increasing, prob_decreasing, data, best_params, best_name, crt_price, crt_earn, df = calc_prob_lr(current_price, current_pe)
         st.write(f"### Regression value is {pred_price :.2f}") 
         st.write(f"### How much regression value is away from current price  {x : .2f} %")
         current_x = x
@@ -59,7 +59,10 @@ if st.button("Flip") :
         else:
             params = [float(p) for p in best_params]
             *shape_params, loc, scale = params
-           
+        
+        col1, col2 = st.columns(2)   
+        #graph 1
+        
         dist = getattr(stats, best_name)
         fig, ax = plt.subplots(figsize=(10, 6))
         ax.hist(data, bins=30, density=True, color="skyblue", edgecolor="black", label="Original Data")
@@ -71,7 +74,27 @@ if st.button("Flip") :
         ax.set_ylabel("Density")
         ax.set_title(f"Best Fit: {best_name}")
         ax.legend()
-        st.pyplot(fig)
+        
+        with col1:
+            st.pyplot(fig)
+
+        #graph 2
+
+        plt.figure(figsize=(10, 6))
+        plt.scatter(df['Earnings'], df['Close'], label='Actual data', color='grey', alpha=0.15)
+        x_vals = df['Earnings']
+        y_vals = -343.73 + 23.3 * x_vals
+        plt.plot(x_vals, y_vals, color='red', label='Regression line')
+        plt.scatter(crt_earn, crt_price, color='blue', s=100, label='Actual Point (current)', zorder=5)
+        plt.scatter(crt_earn, pred_price, color='green', s=100, label='Regression Point', zorder=5)
+        plt.plot([crt_earn, crt_earn], [crt_price, pred_price], color='black', linestyle='--')
+        plt.xlabel('Earnings')
+        plt.ylabel('Close')
+        plt.title('Linear Regression: Earnings vs Close')
+        plt.legend()
+        
+        with col2:
+            st.pyplot(plt)
 
     else : 
             a = 1

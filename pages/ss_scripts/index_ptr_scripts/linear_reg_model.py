@@ -41,4 +41,5 @@ def calc_prob_lr(current_price, current_pe):
     prob_increasing = p_left
     prob_decreasing = p_right
 
-    return pred_price, x, prob_increasing, prob_decreasing, data, best_params, best_name
+# last 4 are returned for the graphs
+    return pred_price, x, prob_increasing, prob_decreasing, data, best_params, best_name, crt_price, crt_earn, df
