@@ -41,6 +41,30 @@ if st.button("Flip") :
         ax.set_ylabel("Density")
         ax.legend()
         st.pyplot(fig)
+        
+        col1, col2 = st.columns(2) 
+        
+        with col1:
+            for i in range(5):
+                st.write("")
+            st.write("### $Equity_{Allocation} = 25 + \\frac {Probability_{Increasing}}{100} \\times 50$")
+            st.write("### $Debt_{Allocation} = 100 - Equity_{Allocation}$")
+            st.write(f"### Probability Increasing = {prob_increasing} %")
+        
+        eq_alloc = 25 + (prob_increasing / 100) * 50
+        debt_alloc = 100 - eq_alloc
+        
+        labels = ['Equity Allocation', 'Debt Allocation']
+        sizes = [eq_alloc, debt_alloc]
+        colors = ['#66b3ff', '#ff9999']
+        explode = (0.1, 0)
+
+        fig, ax = plt.subplots(figsize=(6, 6))
+        ax.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%')
+        ax.axis('equal')
+        fig.legend()
+        with col2:  
+            st.pyplot(fig)
 
     elif selection_mode == "Simple Linear Regression" :
         pred_price, x, prob_increasing, prob_decreasing, data, best_params, best_name, crt_price, crt_earn, df = calc_prob_lr(current_price, current_pe)
