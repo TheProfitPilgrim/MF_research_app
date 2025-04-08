@@ -49,10 +49,11 @@ if st.button("Flip") :
                 st.write("")
             st.write("### $Equity_{Allocation} = 25 + \\frac {Probability_{Increasing}}{100} \\times 50$")
             st.write("### $Debt_{Allocation} = 100 - Equity_{Allocation}$")
-            st.write(f"### Probability Increasing = {prob_increasing} %")
+            st.write(f"### Probability Increasing = {round(prob_increasing,2)*100} %")
         
-        eq_alloc = 25 + (prob_increasing / 100) * 50
+        eq_alloc = 25 + (prob_increasing) * 50
         debt_alloc = 100 - eq_alloc
+
         
         labels = ['Equity Allocation', 'Debt Allocation']
         sizes = [eq_alloc, debt_alloc]
