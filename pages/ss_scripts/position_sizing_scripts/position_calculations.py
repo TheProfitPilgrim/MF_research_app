@@ -14,5 +14,4 @@ def risk_determination(eq_exposure, risk_per_trade, sl, cmp):
     max_pos_0 = round(risk_per_trade / per_sh_loss)
     return max_pos_0
 
-    
-    #tradebook = pd.DataFrame(columns=['Sno.', 'Allowed Qty', 'Qty bought', 'Price', 'Value'])
+
