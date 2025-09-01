@@ -5,3 +5,4 @@ matplotlib
 scipy
 fitter
 numpy-financial
+watchdog
