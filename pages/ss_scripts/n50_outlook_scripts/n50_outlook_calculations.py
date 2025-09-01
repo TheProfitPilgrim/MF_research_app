@@ -182,3 +182,27 @@ def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, ca
     if "Date" in df_mod.columns:
         scatter_df["Date"] = pd.to_datetime(df_mod["Date"], errors="coerce")
     return scatter_df, score_today
+
+def region_year_distribution_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25, bucket_size=5, bucket_if_unique_years_gt=12):
+    scatter_df, score_today = scatter_data_from_inputs(nifty_pe=nifty_pe, nifty_pb=nifty_pb, horizon_code=horizon_code, csv_path=csv_path, cape=cape, cagr_dev=cagr_dev, score_window=score_window)
+    if "Date" not in scatter_df.columns or scatter_df.empty:
+        return pd.DataFrame(columns=["Period","Count","Percent (%)"])
+    sub = scatter_df.loc[scatter_df["In Window"]].dropna(subset=["Date"]).copy()
+    if sub.empty:
+        return pd.DataFrame(columns=["Period","Count","Percent (%)"])
+    sub["Year"] = sub["Date"].dt.year.astype(int)
+    uniq_years = sub["Year"].nunique()
+    if uniq_years > bucket_if_unique_years_gt:
+        y = sub["Year"].astype(int)
+        start = (y // bucket_size) * bucket_size
+        end = start + bucket_size - 1
+        sub["Period"] = start.astype(str) + "-" + end.astype(str)
+        grp = sub.groupby("Period", as_index=False).size().rename(columns={"size":"Count"})
+    else:
+        grp = sub.groupby("Year", as_index=False).size().rename(columns={"size":"Count"})
+        grp["Period"] = grp["Year"].astype(str)
+        grp = grp[["Period","Count"]]
+    total = int(grp["Count"].sum())
+    grp["Percent (%)"] = (grp["Count"] / total * 100.0) if total > 0 else 0.0
+    grp = grp.sort_values("Period").reset_index(drop=True)
+    return grp

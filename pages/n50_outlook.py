@@ -2,7 +2,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from pages.ss_scripts.n50_outlook_scripts.n50_outlook_calculations import load_nifty50outlook_corr, freq_table_from_inputs, scatter_data_from_inputs, compute_cagr_dev_today
+from pages.ss_scripts.n50_outlook_scripts.n50_outlook_calculations import load_nifty50outlook_corr, freq_table_from_inputs, scatter_data_from_inputs, compute_cagr_dev_today, region_year_distribution_from_inputs
 
 st.set_page_config(page_title="N50 Outlook", layout="wide")
 st.title("Nifty 50 Outlook")
@@ -29,7 +29,7 @@ with st.form("n50_inputs"):
     with c4:
         horizon_label = st.selectbox("Timeframe", [lbl for lbl, _ in timeframe_options], index=3)
     with c5:
-        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.05, step=0.05, format="%.2f")
+        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.50, step=0.05, format="%.2f")
     submitted = st.form_submit_button("Submit")
 
 if submitted:
@@ -83,3 +83,22 @@ if submitted:
     ax.set_ylabel("Forward Return (%)")
     ax.set_title(f"Score vs {horizon_label} Return")
     st.pyplot(fig, use_container_width=True)
+    st.subheader("Where Do The Analogs Come From?")
+    year_dist = region_year_distribution_from_inputs(
+        nifty_pe=nifty_pe,
+        nifty_pb=nifty_pb,
+        horizon_code=horizon_code,
+        cagr_dev=dev_pct,
+        score_window=score_window,
+        bucket_size=5,
+        bucket_if_unique_years_gt=12
+    )
+    st.dataframe(year_dist.style.format({"Percent (%)":"{:.2f}"}), use_container_width=True)
+    if not year_dist.empty:
+        fig2, ax2 = plt.subplots(figsize=(8,4))
+        ax2.bar(year_dist["Period"], year_dist["Percent (%)"])
+        ax2.set_xlabel("Period")
+        ax2.set_ylabel("Percent (%)")
+        ax2.set_title("Distribution of Matching Samples by Period")
+        plt.setp(ax2.get_xticklabels(), rotation=45, ha="right")
+        st.pyplot(fig2, use_container_width=True)
