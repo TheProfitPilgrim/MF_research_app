@@ -29,7 +29,7 @@ with st.form("n50_inputs"):
     with c4:
         horizon_label = st.selectbox("Timeframe", [lbl for lbl, _ in timeframe_options], index=3)
     with c5:
-        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.50, step=0.05, format="%.2f")
+        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.05, step=0.05, format="%.2f")
     submitted = st.form_submit_button("Submit")
 
 if submitted:
