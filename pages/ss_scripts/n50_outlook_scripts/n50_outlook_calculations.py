@@ -23,6 +23,29 @@ def load_nifty50outlook_corr(csv_path=None, date_col="Date", method="spearman"):
     corr = df[features + targets].corr(method=method).loc[features, targets]
     return corr, features, targets, df
 
+def compute_cagr_dev_today(nifty_value, csv_path=None, cagr_rate=0.135, date_col="Date"):
+    if csv_path is None:
+        csv_path = os.path.join("Data","india_data","nifty50outlook_data.csv")
+    df = pd.read_csv(csv_path)
+    if date_col not in df.columns:
+        raise ValueError("Date column not found.")
+    df[date_col] = pd.to_datetime(df[date_col], dayfirst=True, errors="coerce")
+    df = df.sort_values(date_col).reset_index(drop=True)
+    close_candidates = ["Close","Nifty","NIFTY","Index","Price","Close Price","Nifty Value"]
+    close_col = next((c for c in close_candidates if c in df.columns), None)
+    if close_col is None and "cagr_curve" not in df.columns:
+        raise ValueError("No Close or cagr_curve column to anchor CAGR.")
+    if close_col is not None:
+        base_level = float(df[close_col].iloc[0])
+    else:
+        base_level = float(df["cagr_curve"].iloc[0])
+    t0 = df[date_col].iloc[0]
+    today = pd.Timestamp.today().normalize()
+    yrs = max(0.0, (today - t0).days / 365.25)
+    cagr_level_today = base_level * ((1.0 + float(cagr_rate)) ** yrs)
+    dev_pct = ((float(nifty_value) - cagr_level_today) / cagr_level_today) * 100.0
+    return float(dev_pct), float(cagr_level_today), today
+
 def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25, bin_width_pct=10):
     if csv_path is None:
         csv_path = os.path.join("Data","india_data","nifty50outlook_data.csv")
@@ -60,9 +83,9 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
     if "P/B" in features:
         x_inputs["P/B"] = float(nifty_pb)
     if "CAPE" in features:
-        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1])
+        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1]) if "CAPE" in df.columns else np.nan
     if "cagr_dev" in features:
-        x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1])
+        x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1]) if "cagr_dev" in df.columns else np.nan
     x_std = {}
     for f in features:
         arr = df[f].values
@@ -73,11 +96,11 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
     score_today = sum(weights.get(f,0.0)*x_std[f] for f in features)
     score_col = "Score_"+horizon_code
     if score_col not in df_mod.columns:
-        return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights
+        return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights, np.nan
     mask = df_mod[score_col].between(score_today - score_window, score_today + score_window)
     sub = df_mod.loc[mask, [horizon_code]].dropna().copy()
     if sub.empty:
-        return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights
+        return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights, np.nan
     vals = sub[horizon_code].values
     is_decimal = float(np.nanmedian(np.abs(vals))) <= 1.0
     ret_pct = vals*100.0 if is_decimal else vals
@@ -87,16 +110,20 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
         hi = lo + bin_width_pct
     bins = np.arange(lo, hi+bin_width_pct, bin_width_pct, dtype=float)
     cats = pd.cut(ret_pct, bins=bins, right=False, include_lowest=True)
-    freq = pd.Series(cats).value_counts().sort_index()
+    freq = cats.value_counts().sort_index()
     total = int(freq.sum())
+    intervals = freq.index.tolist()
+    mids = np.array([(iv.left + iv.right)/2.0 for iv in intervals], dtype=float)
+    probs = freq.values.astype(float) / float(total) if total > 0 else np.zeros(len(freq), dtype=float)
+    ev = float(np.sum(mids * probs)) if len(mids) > 0 else np.nan
     table = pd.DataFrame({
-        "Bin Range (%)":[f"[{int(i.left)}, {int(i.right)})" for i in freq.index],
-        "Frequency":freq.values
+        "Bin Range (%)":[f"[{int(iv.left)}, {int(iv.right)})" for iv in intervals],
+        "Frequency":freq.values,
+        "Probability (%)":probs*100.0
     })
-    table["Probability (%)"] = (table["Frequency"]/total)*100.0 if total>0 else 0.0
     total_row = pd.DataFrame({"Bin Range (%)":["Total"],"Frequency":[total],"Probability (%)":[100.0 if total>0 else 0.0]})
     table = pd.concat([table, total_row], ignore_index=True)
-    return table, score_today, x_std, weights
+    return table, score_today, x_std, weights, ev
 
 def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25):
     if csv_path is None:
@@ -133,9 +160,9 @@ def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, ca
     if "P/B" in features:
         x_inputs["P/B"] = float(nifty_pb)
     if "CAPE" in features:
-        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1])
+        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1]) if "CAPE" in df.columns else np.nan
     if "cagr_dev" in features:
-        x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1])
+        x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1]) if "cagr_dev" in df.columns else np.nan
     x_std = {}
     for f in features:
         arr = df[f].values
@@ -150,10 +177,7 @@ def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, ca
     vals = df_mod[horizon_code].values
     is_decimal = float(np.nanmedian(np.abs(vals))) <= 1.0
     ret_pct = vals*100.0 if is_decimal else vals
-    scatter_df = pd.DataFrame({
-        "Score": df_mod[score_col].values,
-        "Return (%)": ret_pct
-    })
+    scatter_df = pd.DataFrame({"Score": df_mod[score_col].values, "Return (%)": ret_pct})
     scatter_df["In Window"] = scatter_df["Score"].between(score_today - score_window, score_today + score_window)
     if "Date" in df_mod.columns:
         scatter_df["Date"] = pd.to_datetime(df_mod["Date"], errors="coerce")
