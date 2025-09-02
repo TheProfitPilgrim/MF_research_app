@@ -12,7 +12,7 @@ def load_nifty50outlook_corr(csv_path=None, date_col="Date", method="spearman"):
         df[date_col] = pd.to_datetime(df[date_col], dayfirst=True, errors="coerce")
     if "Percentage Deviation from 14% CAGR" in df.columns and "cagr_dev" not in df.columns:
         df = df.rename(columns={"Percentage Deviation from 14% CAGR":"cagr_dev"})
-    features = [c for c in ("P/E","P/B","CAPE","cagr_dev") if c in df.columns]
+    features = [c for c in ("P/E","P/B","cagr_dev") if c in df.columns]
     fwd_a = ["fwd_1m","fwd_3m","fwd_6m","fwd_1y","fwd_2y","fwd_3y","fwd_4y","fwd_5y"]
     fwd_b = ["1 Month Forward Return","3 Month Forward Return","6 Month Forward Return","1 Year Forward Return","2 Year Forward Return","3 Year Forward Return","4 Year Forward Return","5 Year Forward Return"]
     targets = [c for c in fwd_a if c in df.columns]
@@ -31,7 +31,7 @@ def compute_cagr_dev_today(nifty_value, csv_path=None, cagr_rate=0.135, date_col
         raise ValueError("Date column not found.")
     df[date_col] = pd.to_datetime(df[date_col], dayfirst=True, errors="coerce")
     df = df.sort_values(date_col).reset_index(drop=True)
-    close_candidates = ["Close","Nifty","NIFTY","Index","Price","Close Price","Nifty Value"]
+    close_candidates = ["Close","Nifty","NIFTY","Index","Price","Close Price","Nifty Value","Value"]
     close_col = next((c for c in close_candidates if c in df.columns), None)
     if close_col is None and "cagr_curve" not in df.columns:
         raise ValueError("No Close or cagr_curve column to anchor CAGR.")
@@ -46,13 +46,13 @@ def compute_cagr_dev_today(nifty_value, csv_path=None, cagr_rate=0.135, date_col
     dev_pct = ((float(nifty_value) - cagr_level_today) / cagr_level_today) * 100.0
     return float(dev_pct), float(cagr_level_today), today
 
-def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25, bin_width_pct=10):
+def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cagr_dev=None, score_window=0.25, bin_width_pct=10):
     if csv_path is None:
         csv_path = os.path.join("Data","india_data","nifty50outlook_data.csv")
     df = pd.read_csv(csv_path)
     if "Percentage Deviation from 14% CAGR" in df.columns and "cagr_dev" not in df.columns:
         df = df.rename(columns={"Percentage Deviation from 14% CAGR":"cagr_dev"})
-    features_all = ["P/E","P/B","CAPE","cagr_dev"]
+    features_all = ["P/E","P/B","cagr_dev"]
     features = [f for f in features_all if f in df.columns]
     targets_all = ["fwd_1m","fwd_3m","fwd_6m","fwd_1y","fwd_2y","fwd_3y","fwd_4y","fwd_5y"]
     targets = [t for t in targets_all if t in df.columns]
@@ -82,8 +82,6 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
         x_inputs["P/E"] = float(nifty_pe)
     if "P/B" in features:
         x_inputs["P/B"] = float(nifty_pb)
-    if "CAPE" in features:
-        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1]) if "CAPE" in df.columns else np.nan
     if "cagr_dev" in features:
         x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1]) if "cagr_dev" in df.columns else np.nan
     x_std = {}
@@ -98,7 +96,7 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
     if score_col not in df_mod.columns:
         return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights, np.nan
     mask = df_mod[score_col].between(score_today - score_window, score_today + score_window)
-    sub = df_mod.loc[mask, [horizon_code]].dropna().copy()
+    sub = df_mod.loc[mask, [horizon_code, "Date"]].dropna(subset=[horizon_code]).copy() if "Date" in df_mod.columns else df_mod.loc[mask, [horizon_code]].dropna().copy()
     if sub.empty:
         return pd.DataFrame(columns=["Bin Range (%)","Frequency","Probability (%)"]), score_today, x_std, weights, np.nan
     vals = sub[horizon_code].values
@@ -125,15 +123,17 @@ def freq_table_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape
     table = pd.concat([table, total_row], ignore_index=True)
     return table, score_today, x_std, weights, ev
 
-def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25):
+def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cagr_dev=None, score_window=0.25):
     if csv_path is None:
         csv_path = os.path.join("Data","india_data","nifty50outlook_data.csv")
     df = pd.read_csv(csv_path)
     if "Percentage Deviation from 14% CAGR" in df.columns and "cagr_dev" not in df.columns:
         df = df.rename(columns={"Percentage Deviation from 14% CAGR":"cagr_dev"})
-    features = [f for f in ["P/E","P/B","CAPE","cagr_dev"] if f in df.columns]
+    features = [f for f in ["P/E","P/B","cagr_dev"] if f in df.columns]
     targets = [t for t in ["fwd_1m","fwd_3m","fwd_6m","fwd_1y","fwd_2y","fwd_3y","fwd_4y","fwd_5y"] if t in df.columns]
     df_mod = df.copy()
+    if "Date" in df_mod.columns:
+        df_mod["Date"] = pd.to_datetime(df_mod["Date"], dayfirst=True, errors="coerce")
     for f in features:
         df_mod[f+"_wins"] = winsorize(df_mod[f].values, limits=[0.01,0.01])
     for f in features:
@@ -159,8 +159,6 @@ def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, ca
         x_inputs["P/E"] = float(nifty_pe)
     if "P/B" in features:
         x_inputs["P/B"] = float(nifty_pb)
-    if "CAPE" in features:
-        x_inputs["CAPE"] = float(cape) if cape is not None else float(df["CAPE"].iloc[-1]) if "CAPE" in df.columns else np.nan
     if "cagr_dev" in features:
         x_inputs["cagr_dev"] = float(cagr_dev) if cagr_dev is not None else float(df["cagr_dev"].iloc[-1]) if "cagr_dev" in df.columns else np.nan
     x_std = {}
@@ -183,8 +181,8 @@ def scatter_data_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, ca
         scatter_df["Date"] = pd.to_datetime(df_mod["Date"], errors="coerce")
     return scatter_df, score_today
 
-def region_year_distribution_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cape=None, cagr_dev=None, score_window=0.25, bucket_size=5, bucket_if_unique_years_gt=12):
-    scatter_df, score_today = scatter_data_from_inputs(nifty_pe=nifty_pe, nifty_pb=nifty_pb, horizon_code=horizon_code, csv_path=csv_path, cape=cape, cagr_dev=cagr_dev, score_window=score_window)
+def region_year_distribution_from_inputs(nifty_pe, nifty_pb, horizon_code, csv_path=None, cagr_dev=None, score_window=0.25, bucket_size=5, bucket_if_unique_years_gt=12):
+    scatter_df, score_today = scatter_data_from_inputs(nifty_pe=nifty_pe, nifty_pb=nifty_pb, horizon_code=horizon_code, csv_path=csv_path, cagr_dev=cagr_dev, score_window=score_window)
     if "Date" not in scatter_df.columns or scatter_df.empty:
         return pd.DataFrame(columns=["Period","Count","Percent (%)"])
     sub = scatter_df.loc[scatter_df["In Window"]].dropna(subset=["Date"]).copy()
