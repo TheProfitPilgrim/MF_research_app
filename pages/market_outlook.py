@@ -1,9 +1,9 @@
-# pages/n50_outlook.py
+# pages/market_outlook.py
 import os
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from pages.ss_scripts.n50_outlook_scripts.n50_outlook_calculations import load_nifty50outlook_corr, freq_table_from_inputs, scatter_data_from_inputs, compute_cagr_dev_today, region_year_distribution_from_inputs
+from pages.ss_scripts.market_outlook_scripts.market_outlook_calculations import load_nifty50outlook_corr, freq_table_from_inputs, scatter_data_from_inputs, compute_cagr_dev_today, region_year_distribution_from_inputs
 
 st.set_page_config(page_title="N50 Outlook", layout="wide")
 st.title("Index Outlook")
@@ -11,6 +11,7 @@ st.title("Index Outlook")
 index_options = [
     ("Nifty 50", os.path.join("Data","india_data","nifty50outlook_data.csv")),
     ("Nifty Smallcap 100", os.path.join("Data","india_data","niftysmallcap100outlook_data.csv")),
+    ("Nifty Midcap 50", os.path.join("Data","india_data","niftymidcap50outlook_data.csv")),
 ]
 
 timeframe_options = [
@@ -39,7 +40,7 @@ with st.form("inputs"):
     with c4:
         horizon_label = st.selectbox("Timeframe", [lbl for lbl, _ in timeframe_options], index=3)
     with c5:
-        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.50, step=0.05, format="%.2f")
+        score_window = st.number_input("Score window (±)", min_value=0.05, max_value=2.0, value=0.25, step=0.05, format="%.2f")
     submitted = st.form_submit_button("Submit")
 
 if submitted:

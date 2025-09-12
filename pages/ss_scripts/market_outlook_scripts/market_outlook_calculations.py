@@ -1,4 +1,4 @@
-# pages/ss_scripts/n50_outlook_scripts/n50_outlook_calculations.py
+# pages/ss_scripts/market_outlook_scripts/market_outlook_calculations.py
 import os
 import pandas as pd
 import numpy as np
